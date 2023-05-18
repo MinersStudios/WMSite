@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@keyframes transitionIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes transitionOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 4px solid transparent;
+    background-clip: content-box;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    --background-color: #101010;
+    animation: transitionIn 3s;
+    background-color: var(--background-color);
+    font-family: Inter, sans-serif;
+    color: white;
+    max-width: 85rem;
+    margin: auto;
+    z-index: 1000;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    color: #a5c7f8;
+}
+
+menu, ol, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.h-6 {
+    height: 1.5rem;
+}
+
+.w-6 {
+    width: 1.5rem;
+}
+
+/* Main */
+
+main {
+    width: 100%;
+}
+
+main .content {
+    font-weight: 200;
+    margin-left: 4%;
+    margin-right: 4%;
+    margin-top: 65rem;
+    padding: 1rem;
+    min-height: 1000px;
+}
+
+.page-bg {
+    height: 90vh;
+    background: url(../assets/img/bg-wool-dark.png) bottom no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+.page-bg, .page-bg:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-top: 1rem;
+}
+
+.page-bg:after {
+    content: "";
+    bottom: 0;
+    top: -1rem;
+    background: linear-gradient(
+            var(--background-color),
+            rgba(0, 0, 0, 0.2),
+            transparent,
+            rgba(0, 0, 0, 0.2),
+            var(--background-color)
+    );
+}
+
+main div.logo {
+    height: 100%;
+    max-width: 603px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+main div.logo img {
+    width: 100%;
+    padding: 20%;
+}
+
+@keyframes bounce {
+    0%,
+    100%,
+    20%,
+    50%,
+    80% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.scroll-down {
+    position: absolute;
+    bottom: 5rem;
+    left: 50%;
+    margin-left: -16px;
+    width: 32px;
+    height: 32px;
+    animation: bounce 3s infinite 3s;
+}
+
+.scroll-down:before {
+    position: absolute;
+    left: 11%;
+    transform: rotate(-45deg);
+    display: block;
+    width: 24px;
+    height: 24px;
+    content: "";
+    border: solid white;
+    border-width: 0 0 2px 2px;
+}
+
+/* Footer */
+
+@media (max-width: 768px) {
+    footer .content {
+        flex-direction: column;
+    }
+
+    footer .author {
+        padding-bottom: 0.5rem;
+        padding-top: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    footer a.logo {
+        width: 40%;
+    }
+
+    footer .mr {
+        margin-right: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    footer hr {
+        display: none;
+    }
+
+    footer a.logo {
+        width: 11%;
+        margin-right: 2.5rem;
+    }
+
+    footer .mr {
+        margin-right: 1.5rem;
+    }
+}
+
+footer {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 1.5rem;
+    margin: 4%;
+    font-weight: 200;
+    animation: move 5s;
+}
+
+footer .content {
+    margin-left: 2%;
+    margin-right: 2%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+footer hr {
+    border-color: rgba(255, 255, 255, 0.16);
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    width: 33%;
+}
+
+footer .author {
+    display: flex;
+    align-items: center;
+}
+
+footer .author * {
+    margin: 0;
+}
+
+footer .links {
+    font-size: .875rem;
+    line-height: 1.25rem;
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+}
+
+footer .links li {
+    margin: 0.75rem;
+}
+
+footer .logo img {
+    width: 100%;
+}
