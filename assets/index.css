@@ -49,9 +49,10 @@ body {
     background-color: var(--background-color);
     font-family: Inter, sans-serif;
     color: white;
-    max-width: 85rem;
-    margin: auto;
-    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
 }
 
 a {
@@ -78,50 +79,27 @@ menu, ol, ul {
     width: 1.5rem;
 }
 
-/* Main */
+/* Header */
 
-main {
+header {
     width: 100%;
+    margin: 1rem 0 3rem;
 }
 
-main .content {
-    font-weight: 200;
-    margin-left: 4%;
-    margin-right: 4%;
-    margin-top: 65rem;
-    padding: 1rem;
-    min-height: 1000px;
-}
-
-.page-bg {
+header .page-bg {
     height: 90vh;
-    background: url(../assets/img/bg-wool-dark.png) bottom no-repeat;
-    background-size: cover;
-    z-index: -1;
-}
-
-.page-bg, .page-bg:after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin-top: 1rem;
-}
-
-.page-bg:after {
-    content: "";
-    bottom: 0;
-    top: -1rem;
     background: linear-gradient(
             var(--background-color),
             rgba(0, 0, 0, 0.2),
             transparent,
             rgba(0, 0, 0, 0.2),
             var(--background-color)
-    );
+    ), url(../assets/img/bg-wool-dark.png) bottom no-repeat;
+    background-size: cover;
+    z-index: -1;
 }
 
-main div.logo {
+header div.logo {
     height: 100%;
     max-width: 603px;
     display: flex;
@@ -129,9 +107,24 @@ main div.logo {
     margin: auto;
 }
 
-main div.logo img {
+header div.logo img {
     width: 100%;
     padding: 20%;
+}
+
+/* Main */
+
+main {
+    width: 100%;
+    margin: 6rem 0 3rem;
+}
+
+main .content {
+    font-weight: 200;
+    margin-left: 4%;
+    margin-right: 4%;
+    padding: 1rem;
+    min-height: 1000px;
 }
 
 @keyframes bounce {
@@ -175,6 +168,10 @@ main div.logo img {
 /* Footer */
 
 @media (max-width: 768px) {
+    footer {
+        margin: 6%;
+    }
+
     footer .content {
         flex-direction: column;
     }
@@ -196,6 +193,10 @@ main div.logo img {
 }
 
 @media (min-width: 768px) {
+    footer {
+        margin: 3%;
+    }
+
     footer hr {
         display: none;
     }
@@ -211,17 +212,17 @@ main div.logo img {
 }
 
 footer {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 1.5rem;
-    margin: 4%;
+    width: 100%;
+    max-width: 90rem;
     font-weight: 200;
-    animation: move 5s;
 }
 
 footer .content {
-    margin-left: 2%;
-    margin-right: 2%;
-    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 1.5rem;
+    margin-left: 6%;
+    margin-right: 6%;
+    padding: 1rem 2.5rem 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
