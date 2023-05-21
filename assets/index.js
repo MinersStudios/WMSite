@@ -137,3 +137,113 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSelectedIndex(currentIndex, 1);
     startAutoScroll();
 });
+
+let previousRandomIndex = -1;
+let isScreenshotLoading = false;
+
+function getRandomScreenshot() {
+    if (isScreenshotLoading) return;
+
+    const screenshots = [
+        '1.png',
+        '2.png',
+        '3.png',
+        '4.png',
+        '5.png',
+        '6.png',
+        '7.png',
+        '8.png',
+        '9.png',
+        '10.png'
+    ];
+
+    const screenshotImg = document.getElementById('screenshot-img');
+    let random = Math.floor(Math.random() * screenshots.length);
+
+    while (random === previousRandomIndex) {
+        random = Math.floor(Math.random() * screenshots.length);
+    }
+
+    screenshotImg.style.opacity = "0";
+    setTimeout(() => {
+        screenshotImg.style.backgroundImage = `url(./assets/img/screenshots/${screenshots[random]})`;
+    }, 350);
+    previousRandomIndex = random;
+    isScreenshotLoading = true;
+
+    const image = new Image();
+    image.src = './assets/img/screenshots/' + screenshots[random];
+    image.onload = function() {
+        const brightness = calculateBrightness(image);
+        updateButtonColor(brightness);
+        setTimeout(() => {
+            screenshotImg.classList.add('loaded');
+            screenshotImg.style.opacity = "1";
+        }, 350);
+        setTimeout(() => {
+            isScreenshotLoading = false;
+        }, 500);
+    };
+}
+
+function calculateBrightness(image) {
+    const canvas = document.createElement('canvas');
+    canvas.width = image.width;
+    canvas.height = image.height;
+    const context = canvas.getContext('2d');
+    context.drawImage(image, 0, 0);
+    return getAverageBrightness(context.getImageData(0, 0, image.width, image.height));
+}
+
+function getAverageBrightness(imageData) {
+    let brightnessSum = 0;
+    const data = imageData.data;
+    const pixelCount = data.length / 4;
+
+    for (let i = 0; i < pixelCount; i++) {
+        const r = data[i * 4];
+        const g = data[i * 4 + 1];
+        const b = data[i * 4 + 2];
+        const brightnessValue = (r + g + b) / 3;
+        brightnessSum += brightnessValue;
+    }
+
+    return brightnessSum / pixelCount;
+}
+
+function updateButtonColor(brightness) {
+    const button = document.getElementById('random-button');
+    if (brightness > 128) {
+        button.classList.add('dark');
+    } else {
+        button.classList.remove('dark');
+    }
+}
+
+document.getElementById('random-button').addEventListener('click', getRandomScreenshot);
+
+getRandomScreenshot();
+
+function isElementInViewport(element, threshold = 125) {
+    const rect = element.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+    const topVisible = rect.top + threshold < windowHeight;
+    const bottomVisible = rect.bottom - threshold > 0;
+    const leftVisible = rect.left + threshold < windowWidth;
+    const rightVisible = rect.right - threshold > 0;
+    return topVisible && bottomVisible && leftVisible && rightVisible;
+}
+
+function handleScroll() {
+    const articles = document.querySelectorAll('article');
+    for (const article of articles) {
+        if (isElementInViewport(article)) {
+            article.classList.add('animate');
+        }
+    }
+}
+
+window.addEventListener('scroll', handleScroll);
+
+handleScroll();

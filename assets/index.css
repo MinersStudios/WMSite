@@ -68,6 +68,17 @@ a:hover {
     color: #a5c7f8;
 }
 
+article {
+    opacity: 0;
+    transform: translateY(25px) scale(0.9);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+article.animate {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
 menu, ol, ul {
     list-style: none;
     margin: 0;
@@ -573,6 +584,86 @@ main .content {
 
 .team .skin *:not(.selected) {
     display: none;
+}
+
+/* Screen-gallery */
+
+.screen-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgb(23 23 23);
+    border-radius: 1.5rem;
+    width: 100%;
+    margin: auto auto 1rem;
+    max-width: 1100px;
+    position: relative;
+}
+
+.screen-gallery .image-panel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1.5rem;
+}
+
+.screen-gallery .image-panel .screenshot-img {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 29rem;
+    transition: transform 0.5s ease-in-out, opacity 0.35s ease-in-out;
+    opacity: 0;
+}
+
+.screen-gallery .image-panel .screenshot-img:hover {
+    transform: scale(1.05);
+}
+
+.screen-gallery .image-panel .button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 32%;
+    margin: 1rem;
+    padding: 0.35rem;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    border-color: rgb(255 255 255 / 29%);
+    border-style: solid;
+    background-color: transparent;
+}
+
+.screen-gallery .image-panel .button:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+    transform: none;
+}
+
+.screen-gallery .image-panel .button.dark {
+    border-color: rgb(0 0 0 / 29%);
+    color: rgb(0 0 0 / 81%);
+    background-color: #00000038;
+}
+
+.screen-gallery .image-panel .button.dark:hover {
+    color: white;
+    background: rgba(0, 0, 0, 0.72);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.32);
+    transform: none;
+}
+
+.screen-gallery .image-panel .button.dark * {
+    color: currentColor;
+}
+
+@media (max-width: 992px) {
+    .screen-gallery .image-panel .button {
+        width: 90%;
+        margin: 1rem auto;
+        left: 0;
+    }
 }
 
 /* Footer */
