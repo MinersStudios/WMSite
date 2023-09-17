@@ -138,58 +138,67 @@ document.addEventListener("DOMContentLoaded", () => {
     startAutoScroll();
 });
 
-let previousRandomIndex = -1;
+let screenshots = [
+    '1.png',
+    '2.png',
+    '3.png',
+    '4.png',
+    '5.png',
+    '6.png',
+    '7.png',
+    '8.png',
+    '9.png',
+    '10.png',
+    '11.png',
+    '12.png',
+    '13.png',
+    '14.png',
+    '15.png',
+    '17.png',
+    '18.png',
+    '19.png',
+    '20.png',
+    '22.png',
+    '23.png',
+    '24.png',
+    '25.png',
+    '26.png',
+    '27.png',
+    '28.png',
+    '30.png'
+];
+
+function shuffle(array) {
+    for (let i = 0; i < array.length; ++i) {
+        const j = Math.floor(Math.random() * array.length);
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 let isScreenshotLoading = false;
+let screenshotsSeen = 0;
 
 function getRandomScreenshot() {
     if (isScreenshotLoading) return;
 
-    const screenshots = [
-        '1.png',
-        '2.png',
-        '3.png',
-        '4.png',
-        '5.png',
-        '6.png',
-        '7.png',
-        '8.png',
-        '9.png',
-        '10.png',
-        '11.png',
-        '12.png',
-        '13.png',
-        '14.png',
-        '15.png',
-        '17.png',
-        '18.png',
-        '19.png',
-        '20.png',
-        '22.png',
-        '23.png',
-        '24.png',
-        '25.png',
-        '26.png',
-        '27.png',
-        '28.png',
-        '30.png'
-    ];
-
-    const screenshotImg = document.getElementById('screenshot-img');
-    let random = Math.floor(Math.random() * screenshots.length);
-
-    while (random === previousRandomIndex) {
-        random = Math.floor(Math.random() * screenshots.length);
+    if (screenshotsSeen === screenshots.length) {
+        const lastBitch = screenshots[screenshotsSeen];
+        shuffle(screenshots);
+        screenshotsSeen = 0;
+        const thatOne = screenshots.indexOf(lastBitch);
+        if (!thatOne) [screenshots[0], screenshots[thatOne]] = [screenshots[thatOne], screenshots[0]];
     }
 
+    const screenshot = screenshots[screenshotsSeen];
+    const screenshotImg = document.getElementById('screenshot-img');
     screenshotImg.style.opacity = "0";
     setTimeout(() => {
-        screenshotImg.style.backgroundImage = `url(./assets/img/screenshots/${screenshots[random]})`;
+        screenshotImg.style.backgroundImage = `url(./assets/img/screenshots/${screenshot})`;
     }, 350);
-    previousRandomIndex = random;
     isScreenshotLoading = true;
 
     const image = new Image();
-    image.src = './assets/img/screenshots/' + screenshots[random];
+    image.src = './assets/img/screenshots/' + screenshot;
     image.onload = function() {
         const brightness = calculateBrightness(image);
         updateButtonColor(brightness);
@@ -201,6 +210,7 @@ function getRandomScreenshot() {
             isScreenshotLoading = false;
         }, 500);
     };
+    screenshotsSeen += 1;
 }
 
 function calculateBrightness(image) {
