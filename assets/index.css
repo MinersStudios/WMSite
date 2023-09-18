@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('./fonts/golos.css');
 
 @keyframes transitionIn {
     from {
@@ -22,6 +22,7 @@
 
 :root {
     --background-color: #101010;
+    --font-family: 'Golos Text', sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -50,7 +51,7 @@ html {
 body {
     animation: transitionIn 3s;
     background-color: var(--background-color);
-    font-family: Inter, sans-serif;
+    font-family: var(--font-family);
     color: white;
     display: flex;
     flex-direction: column;
@@ -99,9 +100,7 @@ button {
     transition: .3s;
     width: 100%;
     border-style: none;
-}
-
-button * {
+    cursor: pointer;
     text-transform: uppercase;
     font-size: 14px;
     font-weight: bold;
@@ -121,7 +120,7 @@ button a:hover {
 button:hover {
     color: white;
     background: #bebebe;
-    box-shadow: 0 15px 20px rgba(185, 185, 185, 0.18);
+    box-shadow: 0 6px 35px rgba(229, 229, 229, 0.24);
     transform: translateY(-3px);
 }
 
@@ -310,21 +309,19 @@ main .content {
 }
 
 .card-info .text {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 17px;
+    font-weight: 400;
     line-height: 1.71;
     letter-spacing: 1px;
-    text-transform: uppercase;
     color: #a6a6a6;
 }
 
 .card-info .text h1 {
-    font-family: Minecraft-Ten, serif;
+    font-family: var(--font-family);
     font-size: 48px;
-    font-weight: 100;
+    font-weight: 800;
     letter-spacing: 2px;
     line-height: 1.25;
-    text-shadow: 5px 5px 0 rgba(168, 168, 168, 0.74);
     margin: 20px 0;
     color: white;
 }
@@ -337,7 +334,6 @@ main .content {
 
 .card-info.discord h1 {
     color: #5768ba;
-    text-shadow: 5px 5px 0 #1b2761bd;
 }
 
 .card-info.discord .text {
@@ -349,29 +345,28 @@ main .content {
 }
 
 .card-info.discord button:hover {
-    background: #484bd6;
-    box-shadow: 0 15px 20px #484bd62e;
+    background: #484BD66C;
+    box-shadow: 0 6px 35px rgba(72, 75, 214, 0.33);
 }
 
 /* Info card-info */
 
 .card-info.info h1 {
-    color: #ffb75e;
-    text-shadow: 5px 5px 0 #a54b0a;
+    color: #e5f4fa;
 }
 
 .card-info.info .text {
-    color: #a39078;
+    color: #93a6ad;
 }
 
 .card-info.info button {
-    background: #ff71003d;
+    background: #4b486954;
     cursor: pointer;
 }
 
 .card-info.info button:hover {
-    background: #e3731b;
-    box-shadow: 0 15px 20px #ff71003d;
+    background: #4b4869bf;
+    box-shadow: 0 6px 35px rgba(169, 163, 248, 0.2);
 }
 
 /* Team */
@@ -535,6 +530,7 @@ main .content {
     height: 32px;
     margin-right: 0.25rem;
     margin-left: 0.25rem;
+    -webkit-user-select: none;
     user-select: none;
     cursor: pointer;
 }
@@ -551,6 +547,7 @@ main .content {
     cursor: pointer;
     width: 32px;
     height: 32px;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -686,6 +683,7 @@ main .content {
 
     footer a.logo {
         width: 40%;
+        margin-bottom: 1rem;
     }
 
     footer .mr {

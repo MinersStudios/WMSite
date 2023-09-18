@@ -3,7 +3,7 @@
   <head>
     <title>WhoMine</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="WhoMine - это приватный rp-survival сервер для друзей, на котором ты можешь стать кем угодно, всё ограниченно лишь твоей фантазией (ну и правилами конечно же)">
     <meta name="keywords" content="WhoMine, Who Mine, ШоМайн, Шо Майн, Minecraft Server, Сервер Майнкрафт">
     <meta property="og:url" content="/">
@@ -13,8 +13,7 @@
     <meta property="og:image" content="./assets/img/whomine290x290.png">
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <link rel="stylesheet" href="./assets/index.css">
-    <link rel="stylesheet" href="./assets/fonts/minecraft_font.css">
-    <script type="module" src="./assets/index.js" crossorigin="anonymous"></script>
+    <script type="module" src="./assets/index.js"></script>
   </head>
   <body>
     <header id="header">
@@ -24,25 +23,25 @@
         </div>
       </div>
       <div class="scroll-down">
-        <a href="#main"></a>
+        <a href="#main" title="Спуститься ниже"></a>
       </div>
     </header>
     <main id="main">
       <div class="content">
         <article class="card-info info reverse">
-          <img src="./assets/img/sarayimage.png" alt="saray image" draggable="false">
+          <img src="./assets/img/tardis.png" alt="tardis image" draggable="false">
           <div class="text">
-            <h1>WhoMine</h1>
+            <h1>Кто мы?</h1>
             <p>
-              WhoMine - это приватный rp-survival сервер<br>
-              На котором ты можешь стать кем угодно<br>
-              Всё ограниченно лишь твоей фантазией
+              WhoMine - это приватный RP-Survival сервер, где
+              ты можешь стать кем угодно и воплотить свои
+              фантазии в захватывающем игровом мире
             </p>
             <button id="ip" title="Скопировать" type="button">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 1.5rem;margin-right: 0.5rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
               </svg>
-              <span>Скопировать IP</span>
+              <span>play.whomine.net</span>
             </button>
           </div>
         </article>
@@ -50,7 +49,7 @@
           <div class="info">
             <div class="personal-info">
               <div id="personal-info-poloskun">
-                <div class="about" style="color: rgb(234, 50, 60);">
+                <div class="about" style="color: #EA323CFF">
                   <div class="name">Poloskun</div>
                   <div class="job-title">
                     <span style="color: white">Основатель</span>
@@ -121,14 +120,14 @@
           <div class="text">
             <h1>Наш Дискорд</h1>
             <p>
-              Мы думаем, что общение - это самое главное<br>
-              По этому мы решили, что было бы круто<br>
-              Сделать свой сервер в дискорде<br>
-              Где все люди могут общатся друг с другом<br>
-              Заходите к нам, дабы окунутся в мир <b>#WhoMine</b>!
+              Мы думаем, что общение - это самое главное,
+              по этому мы решили, что было бы круто сделать
+              свой сервер в дискорде, где все люди могут
+              общатся друг с другом. Заходите к нам, дабы
+              окунутся в мир <b>#WhoMine</b>!
             </p>
-            <button title="Перейти в дискорд" type="button">
-              <a href="./discord">Перейти в дискорд</a>
+            <button onclick="location.href='./discord'" title="Перейти в дискорд" type="button">
+              Перейти в дискорд
             </button>
           </div>
         </article>
