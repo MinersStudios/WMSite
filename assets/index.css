@@ -211,7 +211,7 @@ header .page-bg {
             transparent,
             rgba(0, 0, 0, 0.2),
             var(--background-color)
-    ), url(../assets/img/bg-wool-dark.png) bottom no-repeat;
+    ), url(../assets/img/bg-wool-dark.webp) bottom no-repeat;
     background-size: cover;
     z-index: -1;
 }
