@@ -337,7 +337,7 @@ nav .logo img {
     nav .content {
         flex-wrap: wrap;
         max-height: 100px;
-        transition: max-height 0.33s ease-out;
+        transition: max-height 0.28s ease-out;
     }
 
     nav li {
@@ -372,7 +372,7 @@ nav .logo img {
         width: 100%;
         flex-direction: column;
         transition: margin 0.25s ease-out;
-        animation: transitionOut 0.35s;
+        animation: transitionOut 0.25s;
         display: none;
     }
 

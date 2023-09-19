@@ -89,7 +89,13 @@ if (ipButtons) {
     }
 }
 
+let isAnimating = false;
+
 hamburger.addEventListener('click', function() {
+    if (isAnimating) return
+
+    isAnimating = true
+
     navItems.classList.toggle('open')
     navContent.classList.toggle('open')
 
@@ -99,7 +105,9 @@ hamburger.addEventListener('click', function() {
         } else {
             navItems.style.display = 'flex'
         }
-    }, 350)
+
+        isAnimating = false
+    }, 250)
 })
 
 document.addEventListener('DOMContentLoaded', () => {
