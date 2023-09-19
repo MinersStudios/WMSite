@@ -20,6 +20,26 @@
     }
 }
 
+@keyframes heightIn {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: 100%;
+    }
+}
+
+@keyframes heightOut {
+    from {
+        height: 100%;
+    }
+
+    to {
+        height: 0;
+    }
+}
+
 :root {
     --background-color: #101010;
     --font-family: 'Golos Text', sans-serif;
@@ -66,7 +86,8 @@ a {
 }
 
 a:hover {
-    color: #a5c7f8;
+    color: #a5c7f8 !important;
+    fill: #93a6ad !important;
 }
 
 article {
@@ -262,6 +283,148 @@ header div.logo img {
     height: 100%;
     width: 3rem;
     margin: auto;
+}
+
+/* Navbar */
+
+nav {
+    width: 100%;
+    margin-top: 1.5rem;
+    max-width: 90rem;
+    position: fixed;
+    z-index: 1000;
+}
+
+nav .content {
+    background-color: #19191996;
+    backdrop-filter: blur(1rem);
+    border-radius: 1.5rem;
+    margin-left: 6%;
+    margin-right: 6%;
+    padding: 1rem 2.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav .content ul {
+    display: flex;
+    align-items: center;
+}
+
+nav .hamburger {
+    cursor: pointer;
+}
+
+nav button {
+    background: rgba(136, 135, 135, 0.33);
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border-radius: 1rem;
+}
+
+nav button:hover {
+    background: rgba(117, 117, 117, 0.75);
+    box-shadow: 0 0 25px rgba(229, 229, 229, 0.24);
+    transform: inherit;
+}
+
+nav .content .ip-button {
+    background: #4b486954;
+}
+
+nav .content .ip-button:hover {
+    background: #4b4869bf;
+    box-shadow: 0 0 25px rgba(169, 163, 248, 0.2);
+}
+
+nav .logo img {
+    height: 3rem;
+    margin-right: 1rem;
+}
+
+@media (max-width: 1234px) {
+    nav .content.open {
+        max-height: 1000px;
+        transition: max-height 0.25s ease-in;
+    }
+
+    nav .content {
+        flex-wrap: wrap;
+        max-height: 100px;
+        transition: max-height 0.33s ease-out;
+    }
+
+    nav li {
+        width: 100%;
+    }
+
+    nav li button {
+        display: flex;
+        height: 4rem;
+    }
+
+    nav li .logo {
+        display: none;
+    }
+
+    nav li .ip-button {
+        display: flex;
+    }
+
+    nav .ip-button {
+        display: none;
+    }
+
+    nav .content ul.open {
+        display: flex;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        animation: transitionIn 0.35s;
+    }
+
+    nav .content ul {
+        width: 100%;
+        flex-direction: column;
+        transition: margin 0.25s ease-out;
+        animation: transitionOut 0.35s;
+        display: none;
+    }
+
+    nav .m {
+        margin-top: 0.75rem;
+    }
+
+    nav .ip-button {
+        margin-top: 1.75rem;
+    }
+}
+
+@media (min-width: 1234px) {
+    nav .hamburger {
+        display: none;
+    }
+
+    nav li .logo {
+        display: flex;
+    }
+
+    nav li .ip-button {
+        display: none;
+    }
+
+    nav .logo {
+        display: none;
+    }
+
+    nav .ip-button{
+        display: flex;
+        width: 20rem;
+    }
+
+    nav .m {
+        margin-left: 0.75rem;
+    }
 }
 
 /* Main */

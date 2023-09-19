@@ -4,22 +4,73 @@
     <title>WhoMine</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="WhoMine - это приватный rp-survival сервер для друзей, на котором ты можешь стать кем угодно, всё ограниченно лишь твоей фантазией (ну и правилами конечно же)">
+    <meta name="title" content="WhoMine">
+    <meta name="author" content="Miners Studios">
+    <meta name="description" content="WhoMine - это приватный RP-Survival сервер, где ты можешь стать кем угодно и воплотить свои фантазии в захватывающем игровом мире">
     <meta name="keywords" content="WhoMine, Who Mine, ШоМайн, Шо Майн, Minecraft Server, Сервер Майнкрафт">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta property="og:url" content="/">
     <meta property="og:title" content="WhoMine - Майнкрафт Сервер">
     <meta property="og:site_name" content="WhoMine">
-    <meta property="og:description" content="WhoMine - это приватный rp-survival сервер для друзей, на котором ты можешь стать кем угодно, всё ограниченно лишь твоей фантазией (ну и правилами конечно же)">
+    <meta property="og:description" content="WhoMine - это приватный RP-Survival сервер, где ты можешь стать кем угодно и воплотить свои фантазии в захватывающем игровом мире">
     <meta property="og:image" content="./assets/img/whomine290x290.webp">
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <link rel="stylesheet" href="./assets/index.css">
     <script type="module" src="./assets/index.js"></script>
   </head>
   <body>
+    <nav id="navigation">
+      <div id="navContent" class="content">
+        <a class="logo" href="#header">
+          <img alt="WhoMine Logo" src="./assets/img/logo_rounded.webp" draggable="false" />
+        </a>
+        <div id="hamburger" class="hamburger">
+          <img src="./assets/img/hamburger.svg" alt="Hamburger">
+        </div>
+        <ul id="navItems">
+          <li>
+            <a class="logo" href="#header">
+              <img alt="WhoMine Logo" src="./assets/img/logo_rounded.webp" draggable="false" />
+            </a>
+          </li>
+          <li class="m">
+            <button onclick="location.href='#info'" title="О Сервере" type="button">
+              О Сервере
+            </button>
+          </li>
+          <li class="m">
+            <button onclick="location.href='https://docs.whomine.net'" title="Документация" type="button">
+              Документация
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-left: 0.5rem; margin-bottom: 0.05rem;">
+                <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5H8.2c-1.1 0-1.7 0-2.1.2a2 2 0 0 0-.9.9C5 6.5 5 7 5 8.2v7.6c0 1.1 0 1.7.2 2.1.2.4.5.7.9.9.4.2 1 .2 2.1.2h7.6c1.1 0 1.7 0 2.1-.2.4-.2.7-.5.9-.9.2-.4.2-1 .2-2.1V14m1-5V4m0 0h-5m5 0-7 7"/>
+              </svg>
+            </button>
+          </li>
+          <li class="m">
+            <button onclick="location.href='./discord'" title="Discord" type="button">
+              Discord
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-left: 0.5rem; margin-bottom: 0.05rem;">
+                <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5H8.2c-1.1 0-1.7 0-2.1.2a2 2 0 0 0-.9.9C5 6.5 5 7 5 8.2v7.6c0 1.1 0 1.7.2 2.1.2.4.5.7.9.9.4.2 1 .2 2.1.2h7.6c1.1 0 1.7 0 2.1-.2.4-.2.7-.5.9-.9.2-.4.2-1 .2-2.1V14m1-5V4m0 0h-5m5 0-7 7"/>
+              </svg>
+            </button>
+          </li>
+          <li class="m">
+            <button class="ip-button" title="Скопировать" type="button">
+              <img alt="Copy Button" src="./assets/img/copy_button.svg" draggable="false" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;" />
+              <span>play.whomine.net</span>
+            </button>
+          </li>
+        </ul>
+        <button class="ip-button" title="Скопировать" type="button">
+          <img alt="Copy Button" src="./assets/img/copy_button.svg" draggable="false" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;" />
+          <span>play.whomine.net</span>
+        </button>
+      </div>
+    </nav>
     <header id="header">
       <div class="page-bg">
         <div class="logo">
-          <img src="./assets/img/whomine290x290.webp" alt="whomine logo" draggable="false">
+          <img src="./assets/img/whomine290x290.webp" alt="whomine logo" draggable="false" />
         </div>
       </div>
       <div class="scroll-down">
@@ -28,8 +79,8 @@
     </header>
     <main id="main">
       <div class="content">
-        <article class="card-info info reverse">
-          <img src="./assets/img/tardis.webp" alt="tardis image" draggable="false">
+        <article id="info" class="card-info info reverse">
+          <img alt="T.A.R.D.I.S. Image" src="./assets/img/tardis.webp" draggable="false" />
           <div class="text">
             <h1>Кто мы?</h1>
             <p>
@@ -37,10 +88,8 @@
               ты можешь стать кем угодно и воплотить свои
               фантазии в захватывающем игровом мире
             </p>
-            <button id="ip" title="Скопировать" type="button">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-              </svg>
+            <button class="ip-button" title="Скопировать" type="button">
+              <img alt="Copy Button" src="./assets/img/copy_button.svg" draggable="false" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;" />
               <span>play.whomine.net</span>
             </button>
           </div>
@@ -52,7 +101,9 @@
                 <div class="about" style="color: #EA323CFF">
                   <div class="name">Poloskun</div>
                   <div class="job-title">
-                    <span style="color: white">Основатель</span>
+                    <span style="color: white">
+                      Основатель
+                    </span>
                   </div>
                 </div>
                 <p class="text">
@@ -69,7 +120,9 @@
                 <div class="about" style="color: rgb(234, 50, 60);">
                   <div class="name">Demmicat</div>
                   <div class="job-title">
-                    <span style="color: white">Основатель</span>
+                    <span style="color: white">
+                      Основатель
+                    </span>
                   </div>
                 </div>
                 <p class="text">
@@ -85,7 +138,9 @@
                 <div class="about" style="color: rgb(249, 114, 22);">
                   <div class="name">Sparrow</div>
                   <div class="job-title">
-                    <span style="color: white">Администратор</span>
+                    <span style="color: white">
+                      Администратор
+                    </span>
                   </div>
                 </div>
                 <p class="text">
@@ -115,7 +170,7 @@
             <div id="body-sparrow" style="background-image: url(./assets/img/team/sparrow_body.webp);"></div>
           </div>
         </article>
-        <article class="card-info discord">
+        <article id="discord" class="card-info discord">
           <img src="./assets/img/discord_pig.webp" alt="discord pig" draggable="false">
           <div class="text">
             <h1>Наш Дискорд</h1>
@@ -131,10 +186,10 @@
             </button>
           </div>
         </article>
-        <article class="screen-gallery">
+        <article id="screen-gallery" class="screen-gallery">
           <div class="image-panel">
             <div id="screenshot-img" class="screenshot-img"></div>
-            <button id="random-button" class="button">
+            <button id="random-button" class="button" type="button">
               <p>Случайный скриншот</p>
             </button>
           </div>
@@ -146,30 +201,33 @@
       <div class="content">
         <div class="author">
           <a class="logo" href="https://minersstudios.com/">
-            <img alt="MinersStudios Logo" src="https://raw.githubusercontent.com/MinersStudios/.github/main/assets/logos/logo_white.svg" draggable="false">
+            <img alt="MinersStudios Logo" src="https://raw.githubusercontent.com/MinersStudios/.github/main/assets/logos/logo_white.svg" draggable="false" />
           </a>
-          <p>WhoMine by <a class="transition-colors" href="https://minersstudios.github.io/">MinersStudios</a></p>
+          <p>
+            WhoMine by
+            <a class="transition-colors" href="https://minersstudios.github.io/">MinersStudios</a>
+          </p>
         </div>
         <hr>
         <ul class="links">
           <li>
             <a class="transition-colors" href="./telegram" title="Telegram канал">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M2.53419 10.491 20.4342 3.72755c.5979-.22564 1.2652.07521 1.4908.67307.0791.21021.0964.43779.0482.65668l-3.0857 14.0805c-.1562.7136-.8611 1.1658-1.5747 1.0086-.1774-.0385-.3442-.1138-.4918-.2198l-6.1453-4.4415c-.3694-.2671-.4533-.784-.1852-1.1543.0289-.0395.0617-.0771.0964-.1118l6.319-6.07213c.1311-.12632.135-.33557.0087-.46768-.109-.11282-.2826-.13404-.4156-.04918L7.88597 13.0975c-.5101.324-1.13978.3973-1.7116.1996l-3.618-1.2516c-.43103-.1485-.65957-.6201-.51107-1.0511.081-.2314.25939-.4166.48889-.5034Z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="m2.5 10.5 18-6.8A1.2 1.2 0 0 1 22 5.1l-3.1 14a1.3 1.3 0 0 1-2 .8l-6.2-4.4a.8.8 0 0 1-.1-1.3l6.3-6v-.5a.3.3 0 0 0-.4 0L7.9 13a2 2 0 0 1-1.7.2L2.6 12a.8.8 0 0 1 0-1.5Z" />
               </svg>
             </a>
           </li>
           <li>
             <a class="transition-colors" href="./discord" title="Discord сервер">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.2.38-.44.87-.6 1.25a18.27 18.27 0 0 0-5.5 0c-.16-.4-.4-.87-.6-1.25a.08.08 0 0 0-.09-.04 19.74 19.74 0 0 0-4.88 1.52.07.07 0 0 0-.04.03A20.26 20.26 0 0 0 .1 18.06a.08.08 0 0 0 .03.05 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.02c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.1 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1 0-.12l.36-.3a.07.07 0 0 1 .08 0 14.2 14.2 0 0 0 12.06 0 .07.07 0 0 1 .08 0l.37.3a.08.08 0 0 1 0 .12 12.3 12.3 0 0 1-1.88.9.08.08 0 0 0-.04.1c.36.7.78 1.36 1.23 2a.08.08 0 0 0 .08.02 19.6 19.6 0 0 0 6-3.03.08.08 0 0 0 .04-.05c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.22 0 2.18 1.1 2.16 2.42 0 1.34-.94 2.42-2.16 2.42Z" />
               </svg>
             </a>
           </li>
           <li>
             <a class="transition-colors" href="./github" title="GitHub">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.4 1 .2-.8.5-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.1-.4-.6-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.2 2.9.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.9 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 0z" />
               </svg>
             </a>
           </li>
