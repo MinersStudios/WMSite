@@ -20,26 +20,6 @@
     }
 }
 
-@keyframes heightIn {
-    from {
-        height: 0;
-    }
-
-    to {
-        height: 100%;
-    }
-}
-
-@keyframes heightOut {
-    from {
-        height: 100%;
-    }
-
-    to {
-        height: 0;
-    }
-}
-
 :root {
     --background-color: #101010;
     --font-family: 'Golos Text', sans-serif;
@@ -58,6 +38,10 @@
     border: 4px solid transparent;
     background-clip: content-box;
     background-color: rgba(255, 255, 255, 0.25);
+}
+
+*:focus {
+    outline: none;
 }
 
 *, :after, :before {
