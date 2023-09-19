@@ -34,6 +34,7 @@ const screenshots = [
     '30.webp'
 ]
 
+let isHamburgering = false;
 let isScreenshotLoading = false
 let screenshotsSeen = 0
 
@@ -89,12 +90,10 @@ if (ipButtons) {
     }
 }
 
-let isAnimating = false;
-
 hamburger.addEventListener('click', function() {
-    if (isAnimating) return
+    if (isHamburgering) return
 
-    isAnimating = true
+    isHamburgering = true
 
     navItems.classList.toggle('open')
     navContent.classList.toggle('open')
@@ -106,7 +105,7 @@ hamburger.addEventListener('click', function() {
             navItems.style.display = 'flex'
         }
 
-        isAnimating = false
+        isHamburgering = false
     }, 250)
 })
 
