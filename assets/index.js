@@ -110,7 +110,7 @@ hamburger.addEventListener('click', function() {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-    const heads = document.querySelectorAll('.head')
+    const heads = Array.from(document.querySelectorAll('.head'))
     const personalInfoContainers = document.querySelectorAll('.personal-info > div')
     const bodyContainers = document.querySelectorAll('.skin > div')
     const teamContainer = document.getElementById('team')
