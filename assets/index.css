@@ -188,6 +188,9 @@ button:hover {
     border-radius: 1.5rem;
     display: inline-flex;
     animation: transitionIn 1s, transitionOut 2s 2s;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
 }
 
 .toast.green {

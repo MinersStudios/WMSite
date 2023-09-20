@@ -1,9 +1,17 @@
+const articles = document.querySelectorAll('article')
 const anchorLinks = document.querySelectorAll('a[href*="#"]')
 const anchorButtons = document.querySelectorAll('button[onclick*="#"]')
 const ipButtons = document.querySelectorAll('.ip-button')
-const hamburger = document.getElementById('hamburger')
-const navItems = document.getElementById('navItems')
-const navContent = document.getElementById('navContent')
+const hamburger = document.querySelector('#hamburger')
+const navItems = document.querySelector('#navItems')
+const navContent = document.querySelector('#navContent')
+const screenshotImg = document.querySelector('#screenshot-img')
+const randomButton = document.querySelector('#random-button')
+const heads = Array.from(document.querySelectorAll('.head'))
+const personalInfoContainers = document.querySelectorAll('.personal-info > div')
+const bodyContainers = document.querySelectorAll('.skin > div')
+const teamContainer = document.querySelector('#team')
+const ip = 'play.whomine.net'
 const screenshots = [
     '1.webp',
     '2.webp',
@@ -34,63 +42,69 @@ const screenshots = [
     '30.webp'
 ]
 
-let isHamburgering = false;
+let isHamburgering = false
 let isScreenshotLoading = false
 let screenshotsSeen = 0
 
 if (anchorLinks) {
-    for (const link of anchorLinks) {
-        link.addEventListener('click', function(event) {
+    anchorLinks.forEach((link) => {
+        const attribute = link.getAttribute('href')
+        const target = document.querySelector(attribute)
+
+        if (!target) {
+            console.error(`Cannot resolve anchor ${attribute} in file ${window.location.pathname}`)
+        }
+
+        link.addEventListener('click', (event) => {
             event.preventDefault()
-
-            const attribute = this.getAttribute('href')
-            const target = document.querySelector(attribute)
-
-            if (target) {
-                scrollTo(target)
-            } else {
-                console.error('Cannot resolve anchor ' + attribute + ' in file ' + window.location.pathname)
-            }
+            scrollTo(target)
         })
-    }
+    })
 }
 
 if (anchorButtons) {
-    for (const button of anchorButtons) {
-        button.addEventListener('click', function(event) {
+    anchorButtons.forEach((button) => {
+        const attribute = button.getAttribute('onclick').split('\'')[1]
+        const target = document.querySelector(attribute)
+
+        if (!target) {
+            console.error(`Cannot resolve anchor ${attribute} in file ${window.location.pathname}`)
+        }
+
+        button.addEventListener('click', (event) => {
             event.preventDefault()
-
-            const attribute = this.getAttribute('onclick').split('\'')[1]
-            const target = document.querySelector(attribute)
-
-            if (target) {
-                scrollTo(target)
-            } else {
-                console.error('Cannot resolve anchor ' + attribute + ' in file ' + window.location.pathname)
-            }
+            scrollTo(target)
         })
-    }
+        button.removeAttribute('onclick')
+    })
 }
 
 if (ipButtons) {
-    for (const button of ipButtons) {
-        button.addEventListener('click', function() {
-            const ip = 'play.whomine.net'
+    ipButtons.forEach((button) => {
+        button.addEventListener('click', async () => {
+            try {
+                if (navigator.clipboard) {
+                    await navigator.clipboard.writeText(ip)
+                } else {
+                    const textarea = document.createElement('textarea')
+                    textarea.value = ip
 
-            navigator.clipboard
-            .writeText(ip)
-            .then(() => {
+                    document.body.appendChild(textarea)
+                    textarea.select()
+                    document.execCommand('copy')
+                    document.body.removeChild(textarea)
+                }
+
                 showToast('Айпи скопирован!', 'green')
-            })
-            .catch((error) => {
+            } catch (error) {
                 showToast('Айпи не удалось скопировать :(', 'red')
-                console.error('Failed to copy the IP, please use a better browser: ', error)
-            })
+                console.error('Failed to copy the IP: ', error)
+            }
         })
-    }
+    })
 }
 
-hamburger.addEventListener('click', function() {
+hamburger.addEventListener('click', () => {
     if (isHamburgering) return
 
     isHamburgering = true
@@ -98,28 +112,18 @@ hamburger.addEventListener('click', function() {
     navItems.classList.toggle('open')
     navContent.classList.toggle('open')
 
-    setTimeout(function() {
-        if (!navItems.classList.contains('open')) {
-            navItems.style.display = ''
-        } else {
-            navItems.style.display = 'flex'
-        }
-
+    setTimeout(async () => {
+        navItems.style.display = navItems.classList.contains('open') ? 'flex' : ''
         isHamburgering = false
     }, 250)
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-    const heads = Array.from(document.querySelectorAll('.head'))
-    const personalInfoContainers = document.querySelectorAll('.personal-info > div')
-    const bodyContainers = document.querySelectorAll('.skin > div')
-    const teamContainer = document.getElementById('team')
-
     let currentIndex = 0
     let isUpdating = false
     let intervalId = null
 
-    document.getElementById('team-arrow-right').addEventListener('click', () => {
+    document.querySelector('#team-arrow-right').addEventListener('click', () => {
         if (isUpdating) return
 
         const previousIndex = currentIndex
@@ -128,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSelectedIndex(currentIndex, previousIndex)
     })
 
-    document.getElementById('team-arrow-left').addEventListener('click', () => {
+    document.querySelector('#team-arrow-left').addEventListener('click', () => {
         if (isUpdating) return
 
         const previousIndex = currentIndex
@@ -138,13 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     heads.forEach((head) => {
-        head.addEventListener('click', function() {
+        head.addEventListener('click', () => {
             if (isUpdating) return
 
             const previousIndex = currentIndex
-            const newIndex = heads.findIndex(
-                head => head.getAttribute('id') === this.getAttribute('id')
-            )
+            const newIndex = heads.findIndex((h) => h.getAttribute('id') === head.getAttribute('id'))
 
             if (newIndex !== currentIndex) {
                 updateSelectedIndex(currentIndex = newIndex, previousIndex)
@@ -208,29 +210,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
-document.getElementById('random-button').addEventListener('click', getRandomScreenshot)
+document.querySelector('#random-button').addEventListener('click', getRandomScreenshot)
 document.addEventListener('scroll', handleScroll)
 
-getRandomScreenshot()
+getRandomScreenshot().catch((error) => {
+    console.error('Failed to get random screenshot: ', error)
+    showToast(`Failed to get random screenshot: ${error.message}`, 'red')
+})
 handleScroll()
 
 function scrollTo(target) {
-    if (target.offsetHeight < window.innerHeight) {
-        window.scrollTo({
-            top: target.offsetTop - (window.innerHeight - target.offsetHeight) / 2,
-            behavior: 'smooth'
-        })
-    } else {
-        window.scrollTo({
-            top: target.offsetTop,
-            behavior: 'smooth'
-        })
-    }
+    const top =
+        target.offsetHeight < window.innerHeight
+        ? target.offsetTop - (window.innerHeight - target.offsetHeight) / 2
+        : target.offsetTop
+
+    window.scrollTo({
+        top,
+        behavior: 'smooth'
+    })
 }
 
 function showToast(text, color) {
     const toastsContainer = document.querySelector('.toasts')
     const toast = document.createElement('div')
+
     toast.classList.add('toast', 'transitionIn', 'transitionOut', color)
     toast.textContent = text
     toastsContainer.appendChild(toast)
@@ -240,7 +244,7 @@ function showToast(text, color) {
     }, 3500)
 }
 
-function getRandomScreenshot() {
+async function getRandomScreenshot() {
     if (isScreenshotLoading) return
     if (screenshotsSeen === screenshots.length) {
         const that = screenshots.indexOf(screenshots[screenshotsSeen])
@@ -255,7 +259,6 @@ function getRandomScreenshot() {
     }
 
     const screenshot = screenshots[screenshotsSeen]
-    const screenshotImg = document.getElementById('screenshot-img')
     screenshotImg.style.opacity = '0'
 
     setTimeout(() => {
@@ -265,51 +268,52 @@ function getRandomScreenshot() {
     isScreenshotLoading = true
 
     const image = new Image()
-    image.src = './assets/img/screenshots/' + screenshot
-    image.onload = function() {
-        updateButtonColor(calculateBrightness(image))
+    image.src = `./assets/img/screenshots/${screenshot}`
+
+    try {
+        await new Promise((resolve) => image.addEventListener('load', resolve))
+        updateButtonColor(calculateBrightness(image, randomButton))
         setTimeout(() => {
             screenshotImg.classList.add('loaded')
             screenshotImg.style.opacity = '1'
         }, 350)
-        setTimeout(() => {
-            isScreenshotLoading = false
-        }, 500)
+    } catch (error) {
+        console.error(`Failed to load the screenshot ${screenshot}: `, error)
+    } finally {
+        isScreenshotLoading = false
     }
 
     screenshotsSeen += 1
 }
 
 function updateButtonColor(brightness) {
-    const button = document.getElementById('random-button')
-
-    if (brightness > 128) {
-        button.classList.add('dark')
-    } else {
-        button.classList.remove('dark')
-    }
+    randomButton.classList.toggle('dark', brightness > 128)
 }
 
-function calculateBrightness(image) {
+function calculateBrightness(image, button) {
     const canvas = document.createElement('canvas')
-    canvas.width = image.width
-    canvas.height = image.height
+    canvas.width = button.offsetWidth
+    canvas.height = button.offsetHeight
 
     const context = canvas.getContext('2d')
-    context.drawImage(image, 0, 0)
+    const buttonRect = button.getBoundingClientRect()
+    context.drawImage(image, -buttonRect.left, -buttonRect.top)
 
-    return getAverageBrightness(context.getImageData(0, 0, image.width, image.height).data)
-}
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
+    const data = imageData.data
 
-function getAverageBrightness(data) {
     let brightnessSum = 0
-    const pixelCount = data.length / 4
+    let weightSum = 0
 
-    for (let i = 0; i < pixelCount; i++) {
-        brightnessSum += (data[i] + data[i + 1] + data[i + 2]) / 3
+    for (let i = 0; i < data.length; i += 4) {
+        const brightness = (data[i] + data[i + 1] + data[i + 2]) / 3
+        const weight = brightness / 255
+
+        brightnessSum += brightness * weight
+        weightSum += weight
     }
 
-    return brightnessSum / pixelCount
+    return brightnessSum / weightSum
 }
 
 function isElementInViewport(element, threshold = 125) {
@@ -324,11 +328,11 @@ function isElementInViewport(element, threshold = 125) {
 }
 
 function handleScroll() {
-    for (const article of document.querySelectorAll('article')) {
+    articles.forEach((article) => {
         if (isElementInViewport(article)) {
             article.classList.add('animate')
         }
-    }
+    })
 }
 
 function shuffle(array) {
