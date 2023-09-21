@@ -1,47 +1,44 @@
 const articles = document.querySelectorAll('article')
-const anchorLinks = document.querySelectorAll('a[href*="#"]')
-const anchorButtons = document.querySelectorAll('button[onclick*="#"]')
-const ipButtons = document.querySelectorAll('.ip-button')
 const hamburger = document.querySelector('#hamburger')
 const navItems = document.querySelector('#navItems')
 const navContent = document.querySelector('#navContent')
 const screenshotImg = document.querySelector('#screenshot-img')
 const randomButton = document.querySelector('#random-button')
-const heads = Array.from(document.querySelectorAll('.head'))
-const personalInfoContainers = document.querySelectorAll('.personal-info > div')
-const bodyContainers = document.querySelectorAll('.skin > div')
-const teamContainer = document.querySelector('#team')
+const brightnessMap = {}
 const ip = 'play.whomine.net'
 const screenshots = [
-    '1.webp',
-    '2.webp',
-    '3.webp',
-    '4.webp',
-    '5.webp',
-    '6.webp',
-    '7.webp',
-    '8.webp',
-    '9.webp',
-    '10.webp',
-    '11.webp',
-    '12.webp',
-    '13.webp',
-    '14.webp',
-    '15.webp',
-    '17.webp',
-    '18.webp',
-    '19.webp',
-    '20.webp',
-    '22.webp',
-    '23.webp',
-    '24.webp',
-    '25.webp',
-    '26.webp',
-    '27.webp',
-    '28.webp',
-    '30.webp'
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    17,
+    18,
+    19,
+    20,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    30
 ]
 
+let anchorLinks = document.querySelectorAll('a[href*="#"]')
+let anchorButtons = document.querySelectorAll('button[onclick*="#"]')
+let ipButtons = document.querySelectorAll('.ip-button')
 let isHamburgering = false
 let isScreenshotLoading = false
 let screenshotsSeen = 0
@@ -60,6 +57,8 @@ if (anchorLinks) {
             scrollTo(target)
         })
     })
+
+    anchorLinks = null
 }
 
 if (anchorButtons) {
@@ -77,6 +76,8 @@ if (anchorButtons) {
         })
         button.removeAttribute('onclick')
     })
+
+    anchorButtons = null
 }
 
 if (ipButtons) {
@@ -102,7 +103,11 @@ if (ipButtons) {
             }
         })
     })
+
+    ipButtons = null
 }
+
+randomButton.addEventListener('click', getRandomScreenshot)
 
 hamburger.addEventListener('click', () => {
     if (isHamburgering) return
@@ -119,6 +124,12 @@ hamburger.addEventListener('click', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+    const headContainer = document.querySelector('.heads')
+    const heads = Array.from(headContainer.children)
+    const personalInfoContainers = document.querySelectorAll('.personal-info > div')
+    const bodyContainers = document.querySelectorAll('.skin > div')
+    const teamContainer = document.querySelector('#team')
+
     let currentIndex = 0
     let isUpdating = false
     let intervalId = null
@@ -141,17 +152,22 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSelectedIndex(currentIndex, previousIndex)
     })
 
-    heads.forEach((head) => {
-        head.addEventListener('click', () => {
-            if (isUpdating) return
+    headContainer.addEventListener('click', event => {
+        if (isUpdating) return
+        
+        const classList = event.target.classList
 
-            const previousIndex = currentIndex
-            const newIndex = heads.findIndex((h) => h.getAttribute('id') === head.getAttribute('id'))
+        if (
+            classList.contains('selected')
+            || !classList.contains('head')
+        ) return
 
-            if (newIndex !== currentIndex) {
-                updateSelectedIndex(currentIndex = newIndex, previousIndex)
-            }
-        })
+        const previousIndex = currentIndex
+        const newIndex = heads.findIndex(
+            (h) => h.getAttribute('id') === event.target.getAttribute('id')
+        )
+
+        updateSelectedIndex(currentIndex = newIndex, previousIndex)
     })
 
     teamContainer.addEventListener('mouseenter', stopAutoScroll)
@@ -210,25 +226,83 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
-document.querySelector('#random-button').addEventListener('click', getRandomScreenshot)
-document.addEventListener('scroll', handleScroll)
+getRandomScreenshot()
 
-getRandomScreenshot().catch((error) => {
-    console.error('Failed to get random screenshot: ', error)
-    showToast(`Failed to get random screenshot: ${error.message}`, 'red')
-})
-handleScroll()
+function getRandomScreenshot() {
+	if (isScreenshotLoading) return
 
-function scrollTo(target) {
-    const top =
-        target.offsetHeight < window.innerHeight
-        ? target.offsetTop - (window.innerHeight - target.offsetHeight) / 2
-        : target.offsetTop
+	const image = new Image()
+	image.src = `./assets/img/screenshots/${screenshotsSeen % screenshots.length + 1}.webp`
 
-    window.scrollTo({
-        top,
-        behavior: 'smooth'
-    })
+	screenshotImg.style.opacity = '0'
+
+	setTimeout(() => {
+		screenshotImg.style.backgroundImage = `url(${image.src})`
+	}, 350)
+
+	isScreenshotLoading = true
+
+	image.onload = () => {
+        randomButton.classList.toggle('dark', brightnessMap[screenshotsSeen])
+
+		setTimeout(() => {
+			screenshotImg.classList.add('loaded')
+			screenshotImg.style.opacity = '1'
+		}, 350)
+
+		setTimeout(() => {
+			isScreenshotLoading = false
+		}, 500)
+	}
+
+	screenshotsSeen += 1
+}
+
+function calculateBrightness(image) {
+	const canvas = document.createElement('canvas')
+	canvas.width = image.width
+	canvas.height = image.height
+	const context = canvas.getContext('2d')
+
+	context.drawImage(image, 0, 0)
+
+	const data = context.getImageData(0, 0, image.width, image.height).data
+	let brightnessSum = 0
+
+	for (let i = 0; i < data.length; i += 4) {
+		brightnessSum += (data[i] + data[i + 1] + data[i + 2]) / 3
+	}
+
+	return brightnessSum * 4 / data.length
+}
+
+(async function precalculateBrightness() {
+	await Promise.all(
+		screenshots.map(async screenshot => {
+			const image = new Image()
+			image.src = `./assets/img/screenshots/${screenshot}.webp`
+
+			await new Promise(resolve => {
+				image.onload = () => {
+					brightnessMap[screenshot] = calculateBrightness(image) >= 128
+					resolve()
+				}
+			})
+		})
+	)
+})()
+
+function isInViewport(element, threshold = 125) {
+	const rect = element.getBoundingClientRect()
+	const windowHeight = window.innerHeight || document.documentElement.clientHeight
+	const windowWidth = window.innerWidth || document.documentElement.clientWidth
+
+	return (
+		rect.top + threshold < windowHeight &&
+		rect.bottom - threshold > 0 &&
+		rect.left + threshold < windowWidth &&
+		rect.right - threshold > 0
+	)
 }
 
 function showToast(text, color) {
@@ -244,100 +318,25 @@ function showToast(text, color) {
     }, 3500)
 }
 
-async function getRandomScreenshot() {
-    if (isScreenshotLoading) return
-    if (screenshotsSeen === screenshots.length) {
-        const that = screenshots.indexOf(screenshots[screenshotsSeen])
+function scrollTo(target) {
+    const top =
+        target.offsetHeight < window.innerHeight
+            ? target.offsetTop - (window.innerHeight - target.offsetHeight) / 2
+            : target.offsetTop
 
-        shuffle(screenshots)
-
-        screenshotsSeen = 0
-
-        if (!that) {
-            [screenshots[0], screenshots[that]] = [screenshots[that], screenshots[0]]
-        }
-    }
-
-    const screenshot = screenshots[screenshotsSeen]
-    screenshotImg.style.opacity = '0'
-
-    setTimeout(() => {
-        screenshotImg.style.backgroundImage = `url(./assets/img/screenshots/${screenshot})`
-    }, 350)
-
-    isScreenshotLoading = true
-
-    const image = new Image()
-    image.src = `./assets/img/screenshots/${screenshot}`
-
-    try {
-        await new Promise((resolve) => image.addEventListener('load', resolve))
-        updateButtonColor(calculateBrightness(image, randomButton))
-        setTimeout(() => {
-            screenshotImg.classList.add('loaded')
-            screenshotImg.style.opacity = '1'
-        }, 350)
-    } catch (error) {
-        console.error(`Failed to load the screenshot ${screenshot}: `, error)
-    } finally {
-        isScreenshotLoading = false
-    }
-
-    screenshotsSeen += 1
-}
-
-function updateButtonColor(brightness) {
-    randomButton.classList.toggle('dark', brightness > 128)
-}
-
-function calculateBrightness(image, button) {
-    const canvas = document.createElement('canvas')
-    canvas.width = button.offsetWidth
-    canvas.height = button.offsetHeight
-
-    const context = canvas.getContext('2d')
-    const buttonRect = button.getBoundingClientRect()
-    context.drawImage(image, -buttonRect.left, -buttonRect.top)
-
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
-    const data = imageData.data
-
-    let brightnessSum = 0
-    let weightSum = 0
-
-    for (let i = 0; i < data.length; i += 4) {
-        const brightness = (data[i] + data[i + 1] + data[i + 2]) / 3
-        const weight = brightness / 255
-
-        brightnessSum += brightness * weight
-        weightSum += weight
-    }
-
-    return brightnessSum / weightSum
-}
-
-function isElementInViewport(element, threshold = 125) {
-    const rect = element.getBoundingClientRect()
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight
-    const windowWidth = window.innerWidth || document.documentElement.clientWidth
-    const topVisible = rect.top + threshold < windowHeight
-    const bottomVisible = rect.bottom - threshold > 0
-    const leftVisible = rect.left + threshold < windowWidth
-    const rightVisible = rect.right - threshold > 0
-    return topVisible && bottomVisible && leftVisible && rightVisible
+    window.scrollTo({
+        top,
+        behavior: 'smooth'
+    })
 }
 
 function handleScroll() {
     articles.forEach((article) => {
-        if (isElementInViewport(article)) {
+        if (isInViewport(article)) {
             article.classList.add('animate')
         }
     })
 }
 
-function shuffle(array) {
-    for (let i = 0; i < array.length; ++i) {
-        const j = Math.floor(Math.random() * array.length);
-        [array[i], array[j]] = [array[j], array[i]]
-    }
-}
+window.addEventListener('scroll', handleScroll)
+handleScroll()
