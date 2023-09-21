@@ -4,6 +4,7 @@ const navItems = document.querySelector('#navItems')
 const navContent = document.querySelector('#navContent')
 const screenshotImg = document.querySelector('#screenshot-img')
 const randomButton = document.querySelector('#random-button')
+const worker = new Worker('./assets/image-loader.js')
 const brightnessMap = {}
 const ip = 'play.whomine.net'
 const screenshots = [
@@ -226,6 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
+worker.postMessage(screenshots)
+worker.onmessage = (event) => {
+    const { screenshot, image } = event.data
+    brightnessMap[screenshot] = calculateBrightness(image) >= 128
+}
+
 getRandomScreenshot()
 
 function getRandomScreenshot() {
@@ -275,22 +282,6 @@ function calculateBrightness(image) {
 
 	return brightnessSum * 4 / data.length
 }
-
-(async function precalculateBrightness() {
-	await Promise.all(
-		screenshots.map(async screenshot => {
-			const image = new Image()
-			image.src = `./assets/img/screenshots/${screenshot}.webp`
-
-			await new Promise(resolve => {
-				image.onload = () => {
-					brightnessMap[screenshot] = calculateBrightness(image) >= 128
-					resolve()
-				}
-			})
-		})
-	)
-})()
 
 function isInViewport(element, threshold = 125) {
 	const rect = element.getBoundingClientRect()
