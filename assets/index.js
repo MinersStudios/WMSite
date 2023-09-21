@@ -13,9 +13,8 @@ const teamContainer = document.querySelector('#team')
 
 const windowHeight = window.innerHeight || document.documentElement.clientHeight
 const windowWidth = window.innerWidth || document.documentElement.clientWidth
-const worker = new Worker('./assets/image-loader.js')
 const ip = 'play.whomine.net'
-const brightnessMap = {}
+const brightnessCache = {}
 const screenshots = [
     1,
     2,
@@ -46,12 +45,12 @@ const screenshots = [
     30
 ]
 
+let usedScreenshots = []
 let anchorLinks = [...document.querySelectorAll('a[href*="#"]')]
 let anchorButtons = [...document.querySelectorAll('button[onclick*="#"]')]
 let ipButtons = [...document.querySelectorAll('.ip-button')]
 let isHamburgering = false
 let isScreenshotLoading = false
-let screenshotsSeen = 0
 
 if (anchorLinks) {
     anchorLinks.forEach((link) => {
@@ -232,31 +231,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
-worker.postMessage(screenshots)
-worker.onmessage = (event) => {
-    const { screenshot, image } = event.data
-    brightnessMap[screenshot] = calculateBrightness(image) >= 128
-}
-
 getRandomScreenshot()
 handleScroll()
 
 function getRandomScreenshot() {
     if (isScreenshotLoading) return
 
-    const image = new Image()
-    image.src = `./assets/img/screenshots/${screenshotsSeen % screenshots.length + 1}.webp`
+    let unusedScreenshots = screenshots.filter(
+        (_, index) => !usedScreenshots.includes(index)
+    )
+
+    if (unusedScreenshots.length === 0) {
+        usedScreenshots = []
+        unusedScreenshots = screenshots
+    }
+
+    let random = Math.trunc(Math.random() * unusedScreenshots.length)
+    let index = screenshots.indexOf(unusedScreenshots[random])
+
+    usedScreenshots.push(index)
 
     screenshotImg.style.opacity = '0'
 
     setTimeout(() => {
-		screenshotImg.style.backgroundImage = `url(${image.src})`
+        screenshotImg.style.backgroundImage = `url(${image.src})`
     }, 350)
 
     isScreenshotLoading = true
 
+    let image = new Image()
+    image.src = `./assets/img/screenshots/${screenshots[index]}.webp`
     image.onload = () => {
-        randomButton.classList.toggle('dark', brightnessMap[screenshotsSeen])
+        randomButton.classList.toggle('dark', getCachedBrightness(image.src))
 
         setTimeout(() => {
             screenshotImg.classList.add('loaded')
@@ -267,8 +273,17 @@ function getRandomScreenshot() {
             isScreenshotLoading = false
         }, 500)
     }
+}
 
-    screenshotsSeen += 1
+function getCachedBrightness(imageSrc) {
+    const cached = brightnessCache[imageSrc]
+
+    if (cached) return cached
+
+    const image = new Image()
+    image.src = imageSrc
+
+    return brightnessCache[imageSrc] = calculateBrightness(image) > 128
 }
 
 function calculateBrightness(image) {
@@ -314,8 +329,8 @@ function showToast(text, color) {
 
 function scrollTo(target) {
     const top = target.offsetHeight < windowHeight
-            ? target.offsetTop - (windowHeight - target.offsetHeight) / 2
-            : target.offsetTop
+        ? target.offsetTop - (windowHeight - target.offsetHeight) / 2
+        : target.offsetTop
 
     window.scrollTo({
         top,
