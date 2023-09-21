@@ -1,12 +1,21 @@
-const articles = document.querySelectorAll('article')
+const articles = [...document.querySelectorAll('article')]
 const hamburger = document.querySelector('#hamburger')
 const navItems = document.querySelector('#navItems')
 const navContent = document.querySelector('#navContent')
 const screenshotImg = document.querySelector('#screenshot-img')
 const randomButton = document.querySelector('#random-button')
+const toastsContainer = document.querySelector('.toasts')
+const headContainer = document.querySelector('.heads')
+const heads = [...headContainer.children]
+const personalInfoContainers = document.querySelectorAll('.personal-info > div')
+const bodyContainers = document.querySelectorAll('.skin > div')
+const teamContainer = document.querySelector('#team')
+
+const windowHeight = window.innerHeight || document.documentElement.clientHeight
+const windowWidth = window.innerWidth || document.documentElement.clientWidth
 const worker = new Worker('./assets/image-loader.js')
-const brightnessMap = {}
 const ip = 'play.whomine.net'
+const brightnessMap = {}
 const screenshots = [
     1,
     2,
@@ -37,9 +46,9 @@ const screenshots = [
     30
 ]
 
-let anchorLinks = document.querySelectorAll('a[href*="#"]')
-let anchorButtons = document.querySelectorAll('button[onclick*="#"]')
-let ipButtons = document.querySelectorAll('.ip-button')
+let anchorLinks = [...document.querySelectorAll('a[href*="#"]')]
+let anchorButtons = [...document.querySelectorAll('button[onclick*="#"]')]
+let ipButtons = [...document.querySelectorAll('.ip-button')]
 let isHamburgering = false
 let isScreenshotLoading = false
 let screenshotsSeen = 0
@@ -108,6 +117,8 @@ if (ipButtons) {
     ipButtons = null
 }
 
+window.addEventListener('scroll', handleScroll)
+
 randomButton.addEventListener('click', getRandomScreenshot)
 
 hamburger.addEventListener('click', () => {
@@ -118,19 +129,13 @@ hamburger.addEventListener('click', () => {
     navItems.classList.toggle('open')
     navContent.classList.toggle('open')
 
-    setTimeout(async () => {
+    setTimeout(() => {
         navItems.style.display = navItems.classList.contains('open') ? 'flex' : ''
         isHamburgering = false
     }, 250)
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-    const headContainer = document.querySelector('.heads')
-    const heads = Array.from(headContainer.children)
-    const personalInfoContainers = document.querySelectorAll('.personal-info > div')
-    const bodyContainers = document.querySelectorAll('.skin > div')
-    const teamContainer = document.querySelector('#team')
-
     let currentIndex = 0
     let isUpdating = false
     let intervalId = null
@@ -155,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     headContainer.addEventListener('click', event => {
         if (isUpdating) return
-        
+
         const classList = event.target.classList
 
         if (
@@ -234,70 +239,68 @@ worker.onmessage = (event) => {
 }
 
 getRandomScreenshot()
+handleScroll()
 
 function getRandomScreenshot() {
-	if (isScreenshotLoading) return
+    if (isScreenshotLoading) return
 
-	const image = new Image()
-	image.src = `./assets/img/screenshots/${screenshotsSeen % screenshots.length + 1}.webp`
+    const image = new Image()
+    image.src = `./assets/img/screenshots/${screenshotsSeen % screenshots.length + 1}.webp`
 
-	screenshotImg.style.opacity = '0'
+    screenshotImg.style.opacity = '0'
 
-	setTimeout(() => {
+    setTimeout(() => {
 		screenshotImg.style.backgroundImage = `url(${image.src})`
-	}, 350)
+    }, 350)
 
-	isScreenshotLoading = true
+    isScreenshotLoading = true
 
-	image.onload = () => {
+    image.onload = () => {
         randomButton.classList.toggle('dark', brightnessMap[screenshotsSeen])
 
-		setTimeout(() => {
-			screenshotImg.classList.add('loaded')
-			screenshotImg.style.opacity = '1'
-		}, 350)
+        setTimeout(() => {
+            screenshotImg.classList.add('loaded')
+            screenshotImg.style.opacity = '1'
+        }, 350)
 
-		setTimeout(() => {
-			isScreenshotLoading = false
-		}, 500)
-	}
+        setTimeout(() => {
+            isScreenshotLoading = false
+        }, 500)
+    }
 
-	screenshotsSeen += 1
+    screenshotsSeen += 1
 }
 
 function calculateBrightness(image) {
-	const canvas = document.createElement('canvas')
-	canvas.width = image.width
-	canvas.height = image.height
-	const context = canvas.getContext('2d')
+    const canvas = document.createElement('canvas')
+    canvas.width = image.width
+    canvas.height = image.height
+    const context = canvas.getContext('2d')
 
-	context.drawImage(image, 0, 0)
+    context.drawImage(image, 0, 0)
 
-	const data = context.getImageData(0, 0, image.width, image.height).data
-	let brightnessSum = 0
+    const data = context.getImageData(0, 0, image.width, image.height).data
+    let brightnessSum = 0
 
-	for (let i = 0; i < data.length; i += 4) {
-		brightnessSum += (data[i] + data[i + 1] + data[i + 2]) / 3
-	}
+    for (let i = 0; i < data.length; i += 4) {
+        brightnessSum += (data[i] + data[i + 1] + data[i + 2]) / 3
+    }
 
-	return brightnessSum * 4 / data.length
+    return brightnessSum * 4 / data.length
 }
 
 function isInViewport(element, threshold = 125) {
-	const rect = element.getBoundingClientRect()
-	const windowHeight = window.innerHeight || document.documentElement.clientHeight
-	const windowWidth = window.innerWidth || document.documentElement.clientWidth
+    const { top, bottom, left, right } = element.getBoundingClientRect()
 
-	return (
-		rect.top + threshold < windowHeight &&
-		rect.bottom - threshold > 0 &&
-		rect.left + threshold < windowWidth &&
-		rect.right - threshold > 0
-	)
+    return (
+        top + threshold < windowHeight &&
+        bottom - threshold > 0 &&
+        left + threshold < windowWidth &&
+        right - threshold > 0
+    )
 }
 
 function showToast(text, color) {
-    const toastsContainer = document.querySelector('.toasts')
     const toast = document.createElement('div')
 
     toast.classList.add('toast', 'transitionIn', 'transitionOut', color)
@@ -310,9 +313,8 @@ function showToast(text, color) {
 }
 
 function scrollTo(target) {
-    const top =
-        target.offsetHeight < window.innerHeight
-            ? target.offsetTop - (window.innerHeight - target.offsetHeight) / 2
+    const top = target.offsetHeight < windowHeight
+            ? target.offsetTop - (windowHeight - target.offsetHeight) / 2
             : target.offsetTop
 
     window.scrollTo({
@@ -328,6 +330,3 @@ function handleScroll() {
         }
     })
 }
-
-window.addEventListener('scroll', handleScroll)
-handleScroll()
