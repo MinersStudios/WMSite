@@ -255,22 +255,24 @@ function getRandomScreenshot() {
     screenshotImg.style.opacity = '0'
     image.src = `./assets/img/screenshots/${screenshots[index]}.webp`
 
-    setTimeout(() => {
-        screenshotImg.style.backgroundImage = `url(${image.src})`
-    }, 350)
-
     isScreenshotLoading = true
     image.onload = () => {
         randomButton.classList.toggle('dark', getCachedBrightness(image))
 
         setTimeout(() => {
-            screenshotImg.classList.add('loaded')
-            screenshotImg.style.opacity = '1'
+            screenshotImg.style.backgroundImage = `url(${image.src})`
         }, 350)
 
         setTimeout(() => {
+            screenshotImg.classList.add('loaded')
+            screenshotImg.style.opacity = '1'
             isScreenshotLoading = false
         }, 500)
+    }
+
+    image.onerror = () => {
+        console.error(`Failed to load image: ${image.src}`)
+        isScreenshotLoading = false
     }
 }
 
