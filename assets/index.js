@@ -2,7 +2,7 @@ const articles = [...document.querySelectorAll('article')]
 const hamburger = document.querySelector('#hamburger')
 const navItems = document.querySelector('#navItems')
 const navContent = document.querySelector('#navContent')
-const screenshotImg = document.querySelector('#screenshot-img')
+const screenshot = document.querySelector('#screenshot-img')
 const randomButton = document.querySelector('#random-button')
 const toastsContainer = document.querySelector('.toasts')
 const headContainer = document.querySelector('.heads')
@@ -246,32 +246,28 @@ function getRandomScreenshot() {
         unusedScreenshots = screenshots
     }
 
-    let image = new Image()
     let random = Math.trunc(Math.random() * unusedScreenshots.length)
     let index = screenshots.indexOf(unusedScreenshots[random])
 
     usedScreenshots.push(index)
 
-    screenshotImg.style.opacity = '0'
-    image.src = `./assets/img/screenshots/${screenshots[index]}.webp`
+    screenshot.style.opacity = '0'
 
-    image.onload = () => {
-        randomButton.classList.toggle('dark', getCachedBrightness(image))
+    setTimeout(() => {
+        screenshot.src = `./assets/img/screenshots/${screenshots[index]}.webp`
 
-        setTimeout(() => {
-            screenshotImg.style.backgroundImage = `url(${image.src})`
-        }, 350)
+        screenshot.onload = () => {
+            randomButton.classList.toggle('dark', getCachedBrightness(screenshot))
 
-        setTimeout(() => {
-            screenshotImg.style.opacity = '1'
+            screenshot.style.opacity = '1'
             isScreenshotLoading = false
-        }, 500)
-    }
+        }
 
-    image.onerror = () => {
-        console.error(`Failed to load image: ${image.src}`)
-        isScreenshotLoading = false
-    }
+        screenshot.onerror = () => {
+            console.error(`Failed to load image: ${screenshot.src}`)
+            isScreenshotLoading = false
+        }
+    }, 350)
 }
 
 function getCachedBrightness(image) {
