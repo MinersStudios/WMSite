@@ -261,7 +261,7 @@ function getRandomScreenshot() {
 
     isScreenshotLoading = true
     image.onload = () => {
-        randomButton.classList.toggle('dark', getCachedBrightness(image.src))
+        randomButton.classList.toggle('dark', getCachedBrightness(image))
 
         setTimeout(() => {
             screenshotImg.classList.add('loaded')
