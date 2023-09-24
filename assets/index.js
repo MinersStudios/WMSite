@@ -246,21 +246,20 @@ function getRandomScreenshot() {
         unusedScreenshots = screenshots
     }
 
+    let image = new Image()
     let random = Math.trunc(Math.random() * unusedScreenshots.length)
     let index = screenshots.indexOf(unusedScreenshots[random])
 
     usedScreenshots.push(index)
 
     screenshotImg.style.opacity = '0'
+    image.src = `./assets/img/screenshots/${screenshots[index]}.webp`
 
     setTimeout(() => {
         screenshotImg.style.backgroundImage = `url(${image.src})`
     }, 350)
 
     isScreenshotLoading = true
-
-    let image = new Image()
-    image.src = `./assets/img/screenshots/${screenshots[index]}.webp`
     image.onload = () => {
         randomButton.classList.toggle('dark', getCachedBrightness(image.src))
 
@@ -275,15 +274,11 @@ function getRandomScreenshot() {
     }
 }
 
-function getCachedBrightness(imageSrc) {
-    const cached = brightnessCache[imageSrc]
-
-    if (cached) return cached
-
-    const image = new Image()
-    image.src = imageSrc
-
-    return brightnessCache[imageSrc] = calculateBrightness(image) > 128
+function getCachedBrightness(image) {
+    const cached = brightnessCache[image.src]
+    return cached
+        ? cached
+        : brightnessCache[image.src] = calculateBrightness(image) > 128
 }
 
 function calculateBrightness(image) {
