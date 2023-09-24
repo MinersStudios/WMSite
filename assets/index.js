@@ -255,7 +255,6 @@ function getRandomScreenshot() {
     screenshotImg.style.opacity = '0'
     image.src = `./assets/img/screenshots/${screenshots[index]}.webp`
 
-    isScreenshotLoading = true
     image.onload = () => {
         randomButton.classList.toggle('dark', getCachedBrightness(image))
 
@@ -264,7 +263,6 @@ function getRandomScreenshot() {
         }, 350)
 
         setTimeout(() => {
-            screenshotImg.classList.add('loaded')
             screenshotImg.style.opacity = '1'
             isScreenshotLoading = false
         }, 500)
