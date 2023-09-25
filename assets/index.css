@@ -113,6 +113,8 @@ button {
     font-family: 'Montserrat', sans-serif;
     letter-spacing: 2px;
     color: white;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 button a {
@@ -314,7 +316,7 @@ nav button {
 nav button:hover {
     background: rgba(117, 117, 117, 0.75);
     box-shadow: 0 0 25px rgba(229, 229, 229, 0.24);
-    transform: inherit;
+    transform: unset;
 }
 
 nav .content .ip-button {
@@ -602,7 +604,7 @@ main .content {
     background: rgb(23 23 23);
     border-radius: 1.5rem;
     width: 100%;
-    margin: auto auto 8rem;
+    margin: auto auto 10rem;
     max-width: 1100px;
     position: relative;
 }
@@ -732,6 +734,141 @@ main .content {
 
 .team .skin *:not(.selected) {
     display: none;
+}
+
+/* FAQ */
+
+@media (max-width: 1024px) {
+    .faq {
+        flex-wrap: wrap;
+    }
+
+    .faq .help {
+        width: 100%;
+        margin-top: 4rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .faq {
+        padding: 0 3rem;
+    }
+
+    .faq .help {
+        width: 75%;
+        margin-left: 6rem;
+    }
+}
+
+.faq {
+    width: 100%;
+    padding: 0;
+    margin: auto auto 10rem;
+    max-width: 1100px;
+    position: relative;
+    display: flex;
+    transition: all 0.5s ease-in-out;
+}
+
+.faq .faq-master {
+    width: 100%;
+}
+
+.faq .faq-master .item {
+    border-radius: 0;
+    border-bottom: 1px solid #8080802b;
+    padding-bottom: 1rem;
+}
+
+.faq .faq-master .item:first-child {
+    border-top: 1px solid #8080802b;
+}
+
+.faq .faq-master .item button {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+    padding: 1rem 24px 0;
+    background: none;
+    box-shadow: unset;
+}
+
+.faq .faq-master .item button:hover {
+    background: none;
+    box-shadow: none;
+    transform: unset;
+}
+
+.faq .faq-master .item button svg {
+    transition: transform 0.25s ease-in-out;
+}
+
+.faq .faq-master .item button svg.open {
+    transform: rotate(180deg);
+}
+
+.faq .faq-master .item .text.open {
+    opacity: 1;
+    max-height: 1000px;
+    transition: all 1s;
+}
+
+.faq .faq-master .item .text {
+    opacity: 0;
+    padding: 0 24px;
+    margin: 0;
+    flex-wrap: wrap;
+    max-height: 0;
+    transition: all 0.32s;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: #ffffff8f;
+}
+
+.faq .help {
+    height: 100%;
+    padding: 3rem 0;
+    background-color: rgb(82 82 82 / 16%);
+    backdrop-filter: blur(1rem);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 2rem;
+    transition: 0.4s;
+}
+
+.faq .help:hover {
+    color: #fff !important;
+    background-color: rgb(82 82 82 / 18%);
+}
+
+.faq .help * {
+    margin: 0 3rem;
+}
+
+.faq .help .link-icon {
+    display: flex;
+    margin-left: auto;
+    margin-right: 3rem;
+    width: 2rem;
+    height: 100%;
+}
+
+.faq .help .icon svg {
+    height: 3.75rem;
+    margin: 0 0 1.5rem;
+}
+
+.faq .help .title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.faq .help .description {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: #ffffff8f;
 }
 
 /* Screen-gallery */

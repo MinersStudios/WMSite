@@ -10,6 +10,7 @@ const heads = [...headContainer.children]
 const personalInfoContainers = document.querySelectorAll('.personal-info > div')
 const bodyContainers = document.querySelectorAll('.skin > div')
 const teamContainer = document.querySelector('#team')
+const faqButtons = document.querySelectorAll('.faq-master .item button');
 
 const ip = 'play.whomine.net'
 const brightnessCache = {}
@@ -141,6 +142,24 @@ if (ipButtons) {
     ipButtons = null
 }
 
+if (faqButtons) {
+    faqButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const text = button.nextElementSibling
+            text.style.display = ''
+
+            setTimeout(() => {
+                text.classList.toggle('open')
+                button.lastElementChild.classList.toggle('open')
+            }, 1)
+
+            setTimeout(() => {
+                text.style.display = text.classList.contains('open') ? '' : 'none'
+            }, 500)
+        })
+    })
+}
+
 window.addEventListener('scroll', handleScroll)
 
 randomButton.addEventListener('click', getRandomScreenshot)
@@ -245,8 +264,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startAutoScroll() {
         intervalId = setInterval(() => {
+            if (
+                !isInViewport(teamContainer)
+                && window.innerWidth < 768
+            ) return
+
             const previousIndex = currentIndex
             currentIndex = (currentIndex + 1) % heads.length
+
             updateSelectedIndex(currentIndex, previousIndex)
         }, 5000)
     }
