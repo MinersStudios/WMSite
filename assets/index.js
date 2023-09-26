@@ -10,73 +10,30 @@ const heads = [...headContainer.children]
 const personalInfoContainers = document.querySelectorAll('.personal-info > div')
 const bodyContainers = document.querySelectorAll('.skin > div')
 const teamContainer = document.querySelector('#team')
-const faqButtons = document.querySelectorAll('.faq-master .item button');
+const teamArrowRight = document.querySelector('#team-arrow-right')
+const teamArrowLeft = document.querySelector('#team-arrow-left')
 
 const ip = 'play.whomine.net'
 const brightnessCache = {}
 const screenshots = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    17,
-    18,
-    19,
-    20,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28,
-    30,
-    32,
-    33,
-    34,
-    35,
-    36,
-    37,
-    38,
-    39,
-    40,
-    41,
-    42,
-    43,
-    44,
-    45,
-    46,
-    47,
-    48,
-    49,
-    50,
-    51,
-    52,
-    53,
-    54,
-    55,
-    56,
-    57,
-    58
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 17, 18, 19, 20,
+    22, 23, 24, 25, 26, 27, 28, 30, 32,
+    33, 34, 35, 36, 37, 38, 39, 40, 41,
+    42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58
 ]
 
 let usedScreenshots = []
+let faqButtons = [...document.querySelectorAll('.faq-master .item button')]
 let anchorLinks = [...document.querySelectorAll('a[href*="#"]')]
 let anchorButtons = [...document.querySelectorAll('button[onclick*="#"]')]
 let ipButtons = [...document.querySelectorAll('.ip-button')]
 let isHamburgering = false
 let isScreenshotLoading = false
+let currentIndex = 0
+let isUpdating = false
+let intervalId = null
 
 if (anchorLinks) {
     anchorLinks.forEach((link) => {
@@ -158,6 +115,8 @@ if (faqButtons) {
             }, 500)
         })
     })
+
+    faqButtons = null
 }
 
 window.addEventListener('scroll', handleScroll)
@@ -178,111 +137,103 @@ hamburger.addEventListener('click', () => {
     }, 250)
 })
 
-document.addEventListener('DOMContentLoaded', () => {
-    let currentIndex = 0
-    let isUpdating = false
-    let intervalId = null
+teamContainer.addEventListener('mouseenter', () => {
+    clearInterval(intervalId)
+})
 
-    document.querySelector('#team-arrow-right').addEventListener('click', () => {
-        if (isUpdating) return
+teamContainer.addEventListener('mouseleave', startAutoScroll)
+
+teamArrowRight.addEventListener('click', () => {
+    if (isUpdating) return
+
+    const previousIndex = currentIndex
+    currentIndex = (currentIndex + 1) % heads.length
+
+    updateSelectedIndex(currentIndex, previousIndex)
+})
+
+teamArrowLeft.addEventListener('click', () => {
+    if (isUpdating) return
+
+    const previousIndex = currentIndex
+    currentIndex = (currentIndex - 1 + heads.length) % heads.length
+
+    updateSelectedIndex(currentIndex, previousIndex)
+})
+
+headContainer.addEventListener('click', event => {
+    if (isUpdating) return
+
+    const classList = event.target.classList
+
+    if (
+        classList.contains('selected')
+        || !classList.contains('head')
+    ) return
+
+    const previousIndex = currentIndex
+    const newIndex = heads.findIndex(
+        (h) => h.getAttribute('id') === event.target.getAttribute('id')
+    )
+
+    updateSelectedIndex(currentIndex = newIndex, previousIndex)
+})
+
+updateSelectedIndex(currentIndex, 1)
+startAutoScroll()
+getRandomScreenshot()
+handleScroll()
+
+function updateSelectedIndex(index, previousIndex) {
+    if (isUpdating) return
+    isUpdating = true
+
+    heads[previousIndex].classList.remove('selected')
+
+    personalInfoContainers[previousIndex].classList.add('fadeText-leave-to', 'fadeText-leave-active')
+    setTimeout(() => {
+        personalInfoContainers[previousIndex].classList.remove('selected', 'fadeText-leave-to', 'fadeText-leave-active')
+    }, 350)
+
+    bodyContainers[previousIndex].classList.add('fadeImg-leave-to', 'fadeImg-leave-active')
+    setTimeout(() => {
+        bodyContainers[previousIndex].classList.remove('selected', 'fadeImg-leave-to', 'fadeImg-leave-active')
+    }, 350)
+
+    heads[index].classList.add('selected')
+
+    personalInfoContainers[index].classList.add('selected', 'fadeText-enter-from', 'fadeText-enter-active')
+    setTimeout(() => {
+        personalInfoContainers[index].classList.remove('fadeText-enter-from')
+    }, 10)
+    setTimeout(() => {
+        personalInfoContainers[index].classList.remove('fadeText-enter-active')
+        isUpdating = false
+    }, 350)
+
+    bodyContainers[index].classList.add('selected', 'fadeImg-enter-from', 'fadeImg-enter-active')
+    setTimeout(() => {
+        bodyContainers[index].classList.remove('fadeImg-enter-from')
+    }, 10)
+    setTimeout(() => {
+        bodyContainers[index].classList.remove('fadeImg-enter-active')
+        isUpdating = false
+    }, 350)
+}
+
+function startAutoScroll() {
+    intervalId = setInterval(() => {
+        if (
+            !isInViewport(teamContainer)
+            && window.innerWidth < 768
+        ) return
 
         const previousIndex = currentIndex
         currentIndex = (currentIndex + 1) % heads.length
 
         updateSelectedIndex(currentIndex, previousIndex)
-    })
-
-    document.querySelector('#team-arrow-left').addEventListener('click', () => {
-        if (isUpdating) return
-
-        const previousIndex = currentIndex
-        currentIndex = (currentIndex - 1 + heads.length) % heads.length
-
-        updateSelectedIndex(currentIndex, previousIndex)
-    })
-
-    headContainer.addEventListener('click', event => {
-        if (isUpdating) return
-
-        const classList = event.target.classList
-
-        if (
-            classList.contains('selected')
-            || !classList.contains('head')
-        ) return
-
-        const previousIndex = currentIndex
-        const newIndex = heads.findIndex(
-            (h) => h.getAttribute('id') === event.target.getAttribute('id')
-        )
-
-        updateSelectedIndex(currentIndex = newIndex, previousIndex)
-    })
-
-    teamContainer.addEventListener('mouseenter', stopAutoScroll)
-    teamContainer.addEventListener('mouseleave', startAutoScroll)
-
-    updateSelectedIndex(currentIndex, 1)
-    startAutoScroll()
-
-    function updateSelectedIndex(index, previousIndex) {
-        if (isUpdating) return
-        isUpdating = true
-
-        heads[previousIndex].classList.remove('selected')
-
-        personalInfoContainers[previousIndex].classList.add('fadeText-leave-to', 'fadeText-leave-active')
-        setTimeout(() => {
-            personalInfoContainers[previousIndex].classList.remove('selected', 'fadeText-leave-to', 'fadeText-leave-active')
-        }, 350)
-
-        bodyContainers[previousIndex].classList.add('fadeImg-leave-to', 'fadeImg-leave-active')
-        setTimeout(() => {
-            bodyContainers[previousIndex].classList.remove('selected', 'fadeImg-leave-to', 'fadeImg-leave-active')
-        }, 350)
-
-        heads[index].classList.add('selected')
-
-        personalInfoContainers[index].classList.add('selected', 'fadeText-enter-from', 'fadeText-enter-active')
-        setTimeout(() => {
-            personalInfoContainers[index].classList.remove('fadeText-enter-from')
-        }, 10)
-        setTimeout(() => {
-            personalInfoContainers[index].classList.remove('fadeText-enter-active')
-            isUpdating = false
-        }, 350)
-
-        bodyContainers[index].classList.add('selected', 'fadeImg-enter-from', 'fadeImg-enter-active')
-        setTimeout(() => {
-            bodyContainers[index].classList.remove('fadeImg-enter-from')
-        }, 10)
-        setTimeout(() => {
-            bodyContainers[index].classList.remove('fadeImg-enter-active')
-            isUpdating = false
-        }, 350)
-    }
-
-    function startAutoScroll() {
-        intervalId = setInterval(() => {
-            if (
-                !isInViewport(teamContainer)
-                && window.innerWidth < 768
-            ) return
-
-            const previousIndex = currentIndex
-            currentIndex = (currentIndex + 1) % heads.length
-
-            updateSelectedIndex(currentIndex, previousIndex)
-        }, 5000)
-    }
-
-    function stopAutoScroll() {
-        clearInterval(intervalId)
-    }
-})
-
-getRandomScreenshot()
-handleScroll()
+    }, 5000)
+}
 
 function getRandomScreenshot() {
     if (isScreenshotLoading) return
@@ -296,8 +247,8 @@ function getRandomScreenshot() {
         unusedScreenshots = screenshots
     }
 
-    let random = Math.trunc(Math.random() * unusedScreenshots.length)
-    let index = screenshots.indexOf(unusedScreenshots[random])
+    const random = Math.trunc(Math.random() * unusedScreenshots.length)
+    const index = screenshots.indexOf(unusedScreenshots[random])
 
     usedScreenshots.push(index)
 
