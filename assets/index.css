@@ -1049,3 +1049,12 @@ footer .links li {
 footer .logo img {
     width: 75%;
 }
+
+footer .disclaimer {
+    font-size: .875rem;
+    text-align: center;
+    line-height: 1.25rem;
+    color: #ffffff57;
+    margin: 0 6%;
+    padding: 2rem 1.5rem 0;
+}
