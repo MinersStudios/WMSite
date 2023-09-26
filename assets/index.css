@@ -800,6 +800,7 @@ main .content {
 }
 
 .faq .faq-master .item button svg {
+    min-width: 24px;
     transition: transform 0.25s ease-in-out;
 }
 
