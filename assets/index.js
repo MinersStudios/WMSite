@@ -36,7 +36,8 @@ let isUpdating = false
 let intervalId = null
 
 if (anchorLinks) {
-    anchorLinks.forEach((link) => {
+    for (let i = 0; i < anchorLinks.length; i++) {
+        const link = anchorLinks[i]
         const attribute = link.getAttribute('href')
         const target = document.querySelector(attribute)
 
@@ -48,13 +49,14 @@ if (anchorLinks) {
             event.preventDefault()
             scrollTo(target)
         })
-    })
+    }
 
     anchorLinks = null
 }
 
 if (anchorButtons) {
-    anchorButtons.forEach((button) => {
+    for (let i = 0; i < anchorButtons.length; i++) {
+        const button = anchorButtons[i]
         const attribute = button.getAttribute('onclick').split('\'')[1]
         const target = document.querySelector(attribute)
 
@@ -67,14 +69,14 @@ if (anchorButtons) {
             scrollTo(target)
         })
         button.removeAttribute('onclick')
-    })
+    }
 
     anchorButtons = null
 }
 
 if (ipButtons) {
-    ipButtons.forEach((button) => {
-        button.addEventListener('click', async () => {
+    for (let i = 0; i < ipButtons.length; i++) {
+        ipButtons[i].addEventListener('click', async () => {
             try {
                 if (navigator.clipboard) {
                     await navigator.clipboard.writeText(ip)
@@ -94,13 +96,15 @@ if (ipButtons) {
                 console.error('Failed to copy the IP: ', error)
             }
         })
-    })
+    }
 
     ipButtons = null
 }
 
 if (faqButtons) {
-    faqButtons.forEach(button => {
+    for (let i = 0; i < faqButtons.length; i++) {
+        const button = faqButtons[i]
+
         button.addEventListener('click', () => {
             const text = button.nextElementSibling
             text.style.display = ''
@@ -114,7 +118,7 @@ if (faqButtons) {
                 text.style.display = text.classList.contains('open') ? '' : 'none'
             }, 500)
         })
-    })
+    }
 
     faqButtons = null
 }
@@ -149,7 +153,7 @@ teamArrowRight.addEventListener('click', () => {
     const previousIndex = currentIndex
     currentIndex = (currentIndex + 1) % heads.length
 
-    updateSelectedIndex(currentIndex, previousIndex)
+    updateSelectedIndex(previousIndex)
 })
 
 teamArrowLeft.addEventListener('click', () => {
@@ -158,7 +162,7 @@ teamArrowLeft.addEventListener('click', () => {
     const previousIndex = currentIndex
     currentIndex = (currentIndex - 1 + heads.length) % heads.length
 
-    updateSelectedIndex(currentIndex, previousIndex)
+    updateSelectedIndex(previousIndex)
 })
 
 headContainer.addEventListener('click', event => {
@@ -172,51 +176,56 @@ headContainer.addEventListener('click', event => {
     ) return
 
     const previousIndex = currentIndex
-    const newIndex = heads.findIndex(
+    currentIndex = heads.findIndex(
         (h) => h.getAttribute('id') === event.target.getAttribute('id')
     )
 
-    updateSelectedIndex(currentIndex = newIndex, previousIndex)
+    updateSelectedIndex(previousIndex)
 })
 
-updateSelectedIndex(currentIndex, 1)
+updateSelectedIndex(1)
 startAutoScroll()
 getRandomScreenshot()
 handleScroll()
 
-function updateSelectedIndex(index, previousIndex) {
+function updateSelectedIndex(previousIndex) {
     if (isUpdating) return
+
     isUpdating = true
+    const previousPersonalInfo = personalInfoContainers[previousIndex].classList
+    const previousBody = bodyContainers[previousIndex].classList
+    const currentPersonalInfo = personalInfoContainers[currentIndex].classList
+    const currentBody = bodyContainers[currentIndex].classList
 
     heads[previousIndex].classList.remove('selected')
 
-    personalInfoContainers[previousIndex].classList.add('fadeText-leave-to', 'fadeText-leave-active')
+    previousPersonalInfo.add('fadeText-leave-to', 'fadeText-leave-active')
     setTimeout(() => {
-        personalInfoContainers[previousIndex].classList.remove('selected', 'fadeText-leave-to', 'fadeText-leave-active')
+        previousPersonalInfo.remove('selected', 'fadeText-leave-to', 'fadeText-leave-active')
     }, 350)
 
-    bodyContainers[previousIndex].classList.add('fadeImg-leave-to', 'fadeImg-leave-active')
+    previousBody.add('fadeImg-leave-to', 'fadeImg-leave-active')
     setTimeout(() => {
-        bodyContainers[previousIndex].classList.remove('selected', 'fadeImg-leave-to', 'fadeImg-leave-active')
+        previousBody.remove('selected', 'fadeImg-leave-to', 'fadeImg-leave-active')
     }, 350)
 
-    heads[index].classList.add('selected')
+    heads[currentIndex].classList.add('selected')
 
-    personalInfoContainers[index].classList.add('selected', 'fadeText-enter-from', 'fadeText-enter-active')
+    currentPersonalInfo.add('selected', 'fadeText-enter-from', 'fadeText-enter-active')
     setTimeout(() => {
-        personalInfoContainers[index].classList.remove('fadeText-enter-from')
+        currentPersonalInfo.remove('fadeText-enter-from')
     }, 10)
     setTimeout(() => {
-        personalInfoContainers[index].classList.remove('fadeText-enter-active')
+        currentPersonalInfo.remove('fadeText-enter-active')
         isUpdating = false
     }, 350)
 
-    bodyContainers[index].classList.add('selected', 'fadeImg-enter-from', 'fadeImg-enter-active')
+    currentBody.add('selected', 'fadeImg-enter-from', 'fadeImg-enter-active')
     setTimeout(() => {
-        bodyContainers[index].classList.remove('fadeImg-enter-from')
+        currentBody.remove('fadeImg-enter-from')
     }, 10)
     setTimeout(() => {
-        bodyContainers[index].classList.remove('fadeImg-enter-active')
+        currentBody.remove('fadeImg-enter-active')
         isUpdating = false
     }, 350)
 }
@@ -231,7 +240,7 @@ function startAutoScroll() {
         const previousIndex = currentIndex
         currentIndex = (currentIndex + 1) % heads.length
 
-        updateSelectedIndex(currentIndex, previousIndex)
+        updateSelectedIndex(previousIndex)
     }, 5000)
 }
 
@@ -296,7 +305,10 @@ function calculateBrightness(image) {
     return brightnessSum * 4 / data.length
 }
 
-function isInViewport(element, threshold = 125) {
+function isInViewport(
+    element,
+    threshold = 125
+) {
     const { top, bottom, left, right } = element.getBoundingClientRect()
     const windowHeight = window.innerHeight || document.documentElement.clientHeight
     const windowWidth = window.innerWidth || document.documentElement.clientWidth
@@ -309,7 +321,10 @@ function isInViewport(element, threshold = 125) {
     )
 }
 
-function showToast(text, color) {
+function showToast(
+    text,
+    color
+) {
     const toast = document.createElement('div')
 
     toast.classList.add('toast', 'transitionIn', 'transitionOut', color)
@@ -334,9 +349,9 @@ function scrollTo(target) {
 }
 
 function handleScroll() {
-    articles.forEach((article) => {
-        if (isInViewport(article)) {
-            article.classList.add('animate')
+    for (let i = 0; i < articles.length; i++) {
+        if (isInViewport(articles[i])) {
+            articles[i].classList.add('animate')
         }
-    })
+    }
 }
