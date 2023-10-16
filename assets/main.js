@@ -1,17 +1,15 @@
+import {showToast, ToastType} from './toasts.js'
+
 const articles = [...document.querySelectorAll('article')]
-const hamburger = document.querySelector('#hamburger')
 const navItems = document.querySelector('#navItems')
 const navContent = document.querySelector('#navContent')
 const screenshot = document.querySelector('#screenshot-img')
 const randomButton = document.querySelector('#random-button')
-const toastsContainer = document.querySelector('.toasts')
 const headContainer = document.querySelector('.heads')
 const heads = [...headContainer.children]
 const personalInfoContainers = document.querySelectorAll('.personal-info > div')
 const bodyContainers = document.querySelectorAll('.skin > div')
 const teamContainer = document.querySelector('#team')
-const teamArrowRight = document.querySelector('#team-arrow-right')
-const teamArrowLeft = document.querySelector('#team-arrow-left')
 
 const ip = 'play.whomine.net'
 const brightnessCache = {}
@@ -26,109 +24,126 @@ const screenshots = [
 ]
 
 let usedScreenshots = []
-let faqButtons = [...document.querySelectorAll('.faq-master .item button')]
-let anchorLinks = [...document.querySelectorAll('a[href*="#"]')]
-let anchorButtons = [...document.querySelectorAll('button[onclick*="#"]')]
-let ipButtons = [...document.querySelectorAll('.ip-button')]
 let isHamburgering = false
 let isScreenshotLoading = false
 let currentIndex = 0
 let isUpdating = false
 let intervalId = null
 
-if (anchorLinks) {
-    for (let i = 0; i < anchorLinks.length; i++) {
-        const link = anchorLinks[i]
-        const attribute = link.getAttribute('href')
-        const target = document.querySelector(attribute)
+async function loadAnchorLinks() {
+    let anchorLinks = [...document.querySelectorAll('a[href*="#"]')]
 
-        if (!target) {
-            console.error(`Cannot resolve anchor ${attribute} in file ${window.location.pathname}`)
-        }
+    if (anchorLinks) {
+        for (let i = 0; i < anchorLinks.length; i++) {
+            const link = anchorLinks[i]
+            const attribute = link.getAttribute('href')
+            const target = document.querySelector(attribute)
 
-        link.addEventListener('click', (event) => {
-            event.preventDefault()
-            scrollTo(target)
-        })
-    }
-
-    anchorLinks = null
-}
-
-if (anchorButtons) {
-    for (let i = 0; i < anchorButtons.length; i++) {
-        const button = anchorButtons[i]
-        const attribute = button.getAttribute('onclick').split('\'')[1]
-        const target = document.querySelector(attribute)
-
-        if (!target) {
-            console.error(`Cannot resolve anchor ${attribute} in file ${window.location.pathname}`)
-        }
-
-        button.addEventListener('click', (event) => {
-            event.preventDefault()
-            scrollTo(target)
-        })
-        button.removeAttribute('onclick')
-    }
-
-    anchorButtons = null
-}
-
-if (ipButtons) {
-    for (let i = 0; i < ipButtons.length; i++) {
-        ipButtons[i].addEventListener('click', async () => {
-            try {
-                if (navigator.clipboard) {
-                    await navigator.clipboard.writeText(ip)
-                } else {
-                    const textarea = document.createElement('textarea')
-                    textarea.value = ip
-
-                    document.body.appendChild(textarea)
-                    textarea.select()
-                    document.execCommand('copy')
-                    document.body.removeChild(textarea)
-                }
-
-                showToast('Айпи скопирован!', 'green')
-            } catch (error) {
-                showToast('Айпи не удалось скопировать :(', 'red')
-                console.error('Failed to copy the IP: ', error)
+            if (!target) {
+                console.error(`Cannot resolve anchor ${attribute} in file ${window.location.pathname}`)
             }
-        })
-    }
 
-    ipButtons = null
+            link.addEventListener('click', (event) => {
+                event.preventDefault()
+                scrollTo(target)
+            })
+        }
+    }
 }
 
-if (faqButtons) {
-    for (let i = 0; i < faqButtons.length; i++) {
-        const button = faqButtons[i]
+async function loadAnchorButtons() {
+    let anchorButtons = [...document.querySelectorAll('button[onclick*="#"]')]
 
-        button.addEventListener('click', () => {
-            const text = button.nextElementSibling
-            text.style.display = ''
+    if (anchorButtons) {
+        for (let i = 0; i < anchorButtons.length; i++) {
+            const button = anchorButtons[i]
+            const attribute = button.getAttribute('onclick').split('\'')[1]
+            const target = document.querySelector(attribute)
 
-            setTimeout(() => {
-                text.classList.toggle('open')
-                button.lastElementChild.classList.toggle('open')
-            }, 1)
+            if (!target) {
+                console.error(`Cannot resolve anchor ${attribute} in file ${window.location.pathname}`)
+            }
 
-            setTimeout(() => {
-                text.style.display = text.classList.contains('open') ? '' : 'none'
-            }, 500)
-        })
+            button.addEventListener('click', (event) => {
+                event.preventDefault()
+                scrollTo(target)
+            })
+            button.removeAttribute('onclick')
+        }
     }
-
-    faqButtons = null
 }
+
+async function loadIpButtons() {
+    let ipButtons = [...document.querySelectorAll('.ip-button')]
+
+    if (ipButtons) {
+        for (let i = 0; i < ipButtons.length; i++) {
+            ipButtons[i].addEventListener('click', async () => {
+                try {
+                    if (navigator.clipboard) {
+                        await navigator.clipboard.writeText(ip)
+                    } else {
+                        const textarea = document.createElement('textarea')
+                        textarea.value = ip
+
+                        document.body.appendChild(textarea)
+                        textarea.select()
+                        document.execCommand('copy')
+                        document.body.removeChild(textarea)
+                    }
+
+                    showToast('Айпи скопирован!', ToastType.SUCCESS)
+                } catch (error) {
+                    showToast('Айпи не удалось скопировать :(', ToastType.ERROR)
+                    console.error('Failed to copy the IP: ', error)
+                }
+            })
+        }
+    }
+}
+
+async function loadFaqButtons() {
+    let faqButtons = [...document.querySelectorAll('.faq-master .item button')]
+
+    if (faqButtons) {
+        for (let i = 0; i < faqButtons.length; i++) {
+            const button = faqButtons[i]
+
+            button.addEventListener('click', () => {
+                const text = button.nextElementSibling
+                text.style.display = ''
+
+                setTimeout(() => {
+                    text.classList.toggle('open')
+                    button.lastElementChild.classList.toggle('open')
+                }, 1)
+
+                setTimeout(() => {
+                    text.style.display = text.classList.contains('open') ? '' : 'none'
+                }, 500)
+            })
+        }
+    }
+}
+
+Promise
+.all([
+    loadAnchorLinks(),
+    loadAnchorButtons(),
+    loadIpButtons(),
+    loadFaqButtons()]
+)
+.catch((error) => {
+    showToast('Кажется, при загрузке страницы произошла ошибка :(', ToastType.ERROR)
+    console.error('Failed to load the page : ', error)
+});
 
 window.addEventListener('scroll', handleScroll)
 
 randomButton.addEventListener('click', getRandomScreenshot)
 
-hamburger.addEventListener('click', () => {
+document.querySelector('#hamburger')
+.addEventListener('click', () => {
     if (isHamburgering) return
 
     isHamburgering = true
@@ -148,7 +163,8 @@ teamContainer.addEventListener('mouseenter', () => {
 
 teamContainer.addEventListener('mouseleave', startAutoScroll)
 
-teamArrowRight.addEventListener('click', () => {
+document.querySelector('#team-arrow-right')
+.addEventListener('click', () => {
     if (isUpdating) return
 
     const previousIndex = currentIndex
@@ -157,7 +173,8 @@ teamArrowRight.addEventListener('click', () => {
     updateSelectedIndex(previousIndex)
 })
 
-teamArrowLeft.addEventListener('click', () => {
+document.querySelector('#team-arrow-left')
+.addEventListener('click', () => {
     if (isUpdating) return
 
     const previousIndex = currentIndex
@@ -263,6 +280,7 @@ function getRandomScreenshot() {
     usedScreenshots.push(index)
 
     screenshot.style.opacity = '0'
+    isScreenshotLoading = true
 
     setTimeout(() => {
         screenshot.src = `./assets/img/screenshots/${screenshots[index]}.webp`
@@ -320,21 +338,6 @@ function isInViewport(
         left + threshold < windowWidth &&
         right - threshold > 0
     )
-}
-
-function showToast(
-    text,
-    color
-) {
-    const toast = document.createElement('div')
-
-    toast.classList.add('toast', 'transitionIn', 'transitionOut', color)
-    toast.textContent = text
-    toastsContainer.appendChild(toast)
-
-    setTimeout(() => {
-        toastsContainer.removeChild(toast)
-    }, 3500)
 }
 
 function scrollTo(target) {
