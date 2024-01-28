@@ -1,6 +1,45 @@
-import {showToast, ToastType} from './toasts.js'
+// Just some code reuse thing, you should track more of these patterns.
+function e(o) { throw new Error(o) }
 
-const articles = [...document.querySelectorAll('article')]
+// Additional files worsen load times, I think you would not do that if you
+// understood what you are doing, so I moved it here.
+const toastsContainer = document.querySelector('.toasts')
+
+const ToastType = {
+    INFO: 'info',
+    SUCCESS: 'success',
+    ERROR: 'error',
+    WARNING: 'warning'
+}
+
+const toastTypeSet = new Set(Object.values(ToastType))
+
+function showToast(
+    text,
+    color = ToastType.INFO
+) {
+    if (typeof text !== 'string') {
+        e('Toast text must be a string')
+    }
+
+    // has() has O(1) time complexity by utilising hashes of values instead of
+    // Object.includes()'s O(log(n)) (which is probably just a loop)
+    if (toastTypeSet.has(color) === false) {
+        e('Toast color must be a valid ToastType')
+    }
+
+    const toast = document.createElement('div')
+
+    toast.classList.add('toast', 'transitionIn', 'transitionOut', color)
+    toast.textContent = text
+    toastsContainer.appendChild(toast)
+
+    setTimeout(() => {
+        toastsContainer.removeChild(toast)
+    }, 3500)
+}
+
+const articles = document.querySelectorAll('article')
 const navItems = document.querySelector('#navItems')
 const navContent = document.querySelector('#navContent')
 const screenshot = document.querySelector('#screenshot-img')
@@ -13,15 +52,13 @@ const teamContainer = document.querySelector('#team')
 
 const ip = 'play.whomine.net'
 const brightnessCache = {}
-const screenshots = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-    11, 12, 13, 14, 15, 17, 18, 19,
-    20, 22, 23, 24, 25, 26, 27, 28,
-    30, 32, 33, 34, 35, 36, 37, 38,
-    39, 40, 41, 42, 43, 44, 45, 46,
-    47, 48, 49, 50, 51, 52, 53, 54,
-    55, 56, 57, 58, 59, 61, 62, 63
-]
+// I did not come up yet with a way to fill it dynamically (i.e. by getting
+// basenames of contents of /assets/img/screenshots directory). And by the way,
+// we should cache more stuff than just brightness map. Also, I can't stop
+// eating when nervous, how do you deal with that? I feel like its the only
+// thing that helps me not die from starvation.
+const screenshots = []
+for (let i = 1; i <= 63; ++i) screenshots.push(i) // This is not an inspiration.
 
 let usedScreenshots = []
 let isHamburgering = false
@@ -31,19 +68,18 @@ let isUpdating = false
 let intervalId = null
 
 async function loadAnchorLinks() {
-    let anchorLinks = [...document.querySelectorAll('a[href*="#"]')]
+    const anchorLinks = document.querySelectorAll('a[href*="^#"]')
 
-    if (anchorLinks) {
-        for (let i = 0; i < anchorLinks.length; i++) {
-            const link = anchorLinks[i]
+    if (anchorLinks.length !== 0) {
+        for (const link of anchorLinks) {
             const attribute = link.getAttribute('href')
             const target = document.querySelector(attribute)
 
-            if (!target) {
+            if (target === null) {
                 console.error(`Cannot resolve anchor ${attribute} in file ${window.location.pathname}`)
             }
 
-            link.addEventListener('click', (event) => {
+            link.addEventListener('click', event => {
                 event.preventDefault()
                 scrollTo(target)
             })
@@ -52,19 +88,18 @@ async function loadAnchorLinks() {
 }
 
 async function loadAnchorButtons() {
-    let anchorButtons = [...document.querySelectorAll('button[onclick*="#"]')]
+    const anchorButtons = document.querySelectorAll('button[onclick*="^#"]')
 
-    if (anchorButtons) {
-        for (let i = 0; i < anchorButtons.length; i++) {
-            const button = anchorButtons[i]
-            const attribute = button.getAttribute('onclick').split('\'')[1]
+    if (anchorButtons.length !== 0) {
+        for (const button of anchorButtons) {
+            const attribute = button.getAttribute('onclick').split("'")[1]
             const target = document.querySelector(attribute)
 
-            if (!target) {
+            if (target === null) {
                 console.error(`Cannot resolve anchor ${attribute} in file ${window.location.pathname}`)
             }
 
-            button.addEventListener('click', (event) => {
+            button.addEventListener('click', event => {
                 event.preventDefault()
                 scrollTo(target)
             })
@@ -73,14 +108,15 @@ async function loadAnchorButtons() {
     }
 }
 
-async function loadIpButtons() {
-    let ipButtons = [...document.querySelectorAll('.ip-button')]
+// Changed capitalisation because IP and FAQ are abbreviations.
+async function loadIPButtons() {
+    const ipButtons = document.querySelectorAll('.ip-button')
 
-    if (ipButtons) {
-        for (let i = 0; i < ipButtons.length; i++) {
+    if (ipButtons.length !== 0) {
+        for (let i = 0, n = ipButtons.length; i < n; ++i) {
             ipButtons[i].addEventListener('click', async () => {
                 try {
-                    if (navigator.clipboard) {
+                    if (clipboard in navigator) {
                         await navigator.clipboard.writeText(ip)
                     } else {
                         const textarea = document.createElement('textarea')
@@ -102,13 +138,11 @@ async function loadIpButtons() {
     }
 }
 
-async function loadFaqButtons() {
-    let faqButtons = [...document.querySelectorAll('.faq-master .item button')]
+async function loadFAQButtons() {
+    const faqButtons = document.querySelectorAll('.faq-master .item button')
 
-    if (faqButtons) {
-        for (let i = 0; i < faqButtons.length; i++) {
-            const button = faqButtons[i]
-
+    if (faqButtons.length !== 0) {
+        for (const button of faqButtons) {
             button.addEventListener('click', () => {
                 const text = button.nextElementSibling
                 text.style.display = ''
@@ -126,36 +160,48 @@ async function loadFaqButtons() {
     }
 }
 
-Promise
-.all([
-    loadAnchorLinks(),
-    loadAnchorButtons(),
-    loadIpButtons(),
-    loadFaqButtons()]
-)
-.catch((error) => {
-    showToast('Кажется, при загрузке страницы произошла ошибка :(', ToastType.ERROR)
-    console.error('Failed to load the page : ', error)
-});
+// Removed error catching because it has no sense here.
+// You either get it because there is an programming error in this script or
+// HTML document does not have expected elements. Either way, it just costs
+// more performance even when there is no errors (this may be wrong?) and by
+// shipping this script together with HTML file you will not have a need for
+// this. Also, you had non-portable racing condition, because you linked this
+// script as a module (implying defer = true) and having async at the same time
+// which made it behave differently between web browsers and probably caused
+// running this entire script while DOM was constructing, which you seem by the
+// code have already encountered and tried to create elements if there were not
+// present at the time the check was performed, mitigating the race.
+// Conclusion: by having no bugs in the code and consider index.html to be
+// always present when this script is ran (they had the same name and does not
+// look like a template to me) you will not ever need those checks. And you may
+// ask: how do I have no bugs in my code? Answer: by constantly improving it.
+// Why leave a constant mark on performance while them being useful only
+// because of compile-time errors. This is irrational. And that is why I
+// removed them.
+loadAnchorLinks()
+loadAnchorButtons()
+loadIPButtons()
+loadFAQButtons()
 
 window.addEventListener('scroll', handleScroll)
 
 randomButton.addEventListener('click', getRandomScreenshot)
 
 document.querySelector('#hamburger')
-.addEventListener('click', () => {
-    if (isHamburgering) return
+    .addEventListener('click', () => {
+        if (isHamburgering === true) return
 
-    isHamburgering = true
+        // A good one.
+        isHamburgering = true
 
-    navItems.classList.toggle('open')
-    navContent.classList.toggle('open')
+        navItems.classList.toggle('open')
+        navContent.classList.toggle('open')
 
-    setTimeout(() => {
-        navItems.style.display = navItems.classList.contains('open') ? 'flex' : ''
-        isHamburgering = false
-    }, 250)
-})
+        setTimeout(() => {
+            navItems.style.display = navItems.classList.contains('open') ? 'flex' : ''
+            isHamburgering = false
+        }, 250)
+    })
 
 teamContainer.addEventListener('mouseenter', () => {
     clearInterval(intervalId)
@@ -164,50 +210,49 @@ teamContainer.addEventListener('mouseenter', () => {
 teamContainer.addEventListener('mouseleave', startAutoScroll)
 
 document.querySelector('#team-arrow-right')
-.addEventListener('click', () => {
-    if (isUpdating) return
+    .addEventListener('click', () => {
+        if (isUpdating === true) return
 
-    const previousIndex = currentIndex
-    currentIndex = (currentIndex + 1) % heads.length
+        const previousIndex = currentIndex
+        currentIndex = (currentIndex + 1) % heads.length
 
-    updateSelectedIndex(previousIndex)
-})
+        updateSelectedIndex(previousIndex)
+    })
 
 document.querySelector('#team-arrow-left')
-.addEventListener('click', () => {
-    if (isUpdating) return
+    .addEventListener('click', () => {
+        if (isUpdating === true) return
 
-    const previousIndex = currentIndex
-    currentIndex = (currentIndex - 1 + heads.length) % heads.length
+        const previousIndex = currentIndex
+        currentIndex = (currentIndex - 1 + heads.length) % heads.length
 
-    updateSelectedIndex(previousIndex)
-})
+        updateSelectedIndex(previousIndex)
+    })
 
 headContainer.addEventListener('click', event => {
-    if (isUpdating) return
+    if (isUpdating === true) return
 
     const classList = event.target.classList
 
-    if (
-        classList.contains('selected')
-        || !classList.contains('head')
-    ) return
+    if (classList.contains('selected') === true
+        || classList.contains('head') === false)
+        return
 
     const previousIndex = currentIndex
     currentIndex = heads.findIndex(
-        (h) => h.getAttribute('id') === event.target.getAttribute('id')
+        h => h.getAttribute('id') === event.target.getAttribute('id')
     )
 
     updateSelectedIndex(previousIndex)
 })
 
-updateSelectedIndex(1)
+updateSelectedIndex()
 startAutoScroll()
 getRandomScreenshot()
 handleScroll()
 
-function updateSelectedIndex(previousIndex) {
-    if (isUpdating) return
+function updateSelectedIndex(previousIndex = 1) {
+    if (isUpdating === true) return
 
     isUpdating = true
     const previousPersonalInfo = personalInfoContainers[previousIndex].classList
@@ -250,10 +295,8 @@ function updateSelectedIndex(previousIndex) {
 
 function startAutoScroll() {
     intervalId = setInterval(() => {
-        if (
-            !isInViewport(teamContainer)
-            && window.innerWidth < 768
-        ) return
+        if (isInViewport(teamContainer) === false
+            && window.innerWidth < 768) return
 
         const previousIndex = currentIndex
         currentIndex = (currentIndex + 1) % heads.length
@@ -263,7 +306,7 @@ function startAutoScroll() {
 }
 
 function getRandomScreenshot() {
-    if (isScreenshotLoading) return
+    if (isScreenshotLoading === true) return
 
     let unusedScreenshots = screenshots.filter(
         (_, index) => !usedScreenshots.includes(index)
@@ -275,6 +318,16 @@ function getRandomScreenshot() {
     }
 
     const random = Math.trunc(Math.random() * unusedScreenshots.length)
+    // Line below is quite expensive, you dereference an element in
+    // unusedScreenshots, then compare it with every element of screenshots
+    // array until they are or there are no more elements, take its index or -1
+    // (invalid index) and then dereference an element from screenshots array
+    // with that index. Which could be solved if it did not involved 2
+    // unnecessary arrays which together have the same contents and also
+    // introduce additional strain on GC every time you get a new screenshot.
+    // Yes, I agree, it solved problem of never ending random generation, which
+    // I instead of solving delayed by shuffling an array, i.e. random'ing it
+    // instead of drawing its elements randomly.
     const index = screenshots.indexOf(unusedScreenshots[random])
 
     usedScreenshots.push(index)
@@ -300,10 +353,9 @@ function getRandomScreenshot() {
 }
 
 function getCachedBrightness(image) {
-    const cached = brightnessCache[image.src]
-    return cached
-        ? cached
-        : brightnessCache[image.src] = calculateBrightness(image) > 128
+    if (typeof brightnessCache[image.src] === 'undefined')
+        brightnessCache[image.src] = calculateBrightness(image) > 128
+    return brightnessCache[image.src]
 }
 
 function calculateBrightness(image) {
@@ -329,9 +381,13 @@ function isInViewport(
     threshold = 125
 ) {
     const { top, bottom, left, right } = element.getBoundingClientRect()
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight
-    const windowWidth = window.innerWidth || document.documentElement.clientWidth
+    const windowHeight = window.innerHeight ?? document.documentElement.clientHeight
+    const windowWidth = window.innerWidth ?? document.documentElement.clientWidth
 
+    // Should probably be replaced with some simpler arithmetic. Those
+    // comparison can quite literally turn into branches, I don't trust modern
+    // JavaScript engines (and it may be not possible to not turn them into
+    // branches on client's architecture).
     return (
         top + threshold < windowHeight &&
         bottom - threshold > 0 &&
@@ -341,10 +397,8 @@ function isInViewport(
 }
 
 function scrollTo(target) {
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight
-    const top = target.offsetHeight < windowHeight
-        ? target.offsetTop - (windowHeight - target.offsetHeight) / 2
-        : target.offsetTop
+    const windowHeight = window.innerHeight ?? document.documentElement.clientHeight
+    const top = target.offsetTop - Math.max(0, windowHeight - target.offsetHeight) / 2
 
     window.scrollTo({
         top,
@@ -353,9 +407,7 @@ function scrollTo(target) {
 }
 
 function handleScroll() {
-    for (let i = 0; i < articles.length; i++) {
-        if (isInViewport(articles[i])) {
-            articles[i].classList.add('animate')
-        }
+    for (const article of articles) {
+        if (isInViewport(article)) article.classList.add('animate')
     }
 }
