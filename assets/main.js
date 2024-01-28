@@ -116,7 +116,7 @@ async function loadIPButtons() {
         for (let i = 0, n = ipButtons.length; i < n; ++i) {
             ipButtons[i].addEventListener('click', async () => {
                 try {
-                    if (clipboard in navigator) {
+                    if (typeof navigator.clipboard === 'undefined') {
                         await navigator.clipboard.writeText(ip)
                     } else {
                         const textarea = document.createElement('textarea')
