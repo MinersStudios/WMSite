@@ -232,7 +232,7 @@ function handleAnchorClick(event) {
     }
 }
 
-function handleIPButtonClick() {
+async function handleIPButtonClick() {
     try {
         if (typeof navigator.clipboard === 'undefined') {
             const textarea = document.createElement('textarea')
@@ -243,7 +243,7 @@ function handleIPButtonClick() {
             document.execCommand('copy')
             document.body.removeChild(textarea)
         } else {
-            navigator.clipboard.writeText(ip)
+            await navigator.clipboard.writeText(ip)
         }
 
         showToast('Айпи скопирован!', ToastType.SUCCESS)
