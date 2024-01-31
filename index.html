@@ -1,67 +1,56 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <title>WhoMine</title>
     <meta charset="UTF-8">
+    <title>WhoMine</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="title" content="WhoMine">
     <meta name="author" content="Miners Studios">
     <meta name="description" content="WhoMine - это приватный RP-Survival сервер, где ты можешь стать кем угодно и воплотить свои фантазии в захватывающем игровом мире">
-    <meta name="keywords" content="WhoMine, Who Mine, ШоМайн, Шо Майн, Minecraft Server, Сервер Майнкрафт">
+    <meta name="keywords" content="WhoMine,Who Mine,ШоМайн,Шо Майн,Minecraft Server,Сервер Майнкрафт">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta property="og:url" content="/">
     <meta property="og:title" content="WhoMine - Майнкрафт Сервер">
     <meta property="og:site_name" content="WhoMine">
     <meta property="og:description" content="WhoMine - это приватный RP-Survival сервер, где ты можешь стать кем угодно и воплотить свои фантазии в захватывающем игровом мире">
-    <meta property="og:image" content="./assets/img/whomine290x290.webp">
-    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+    <meta property="og:image" content="assets/img/whomine290x290.webp">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <script type="module" src="assets/main.js"></script>
     <link rel="stylesheet" href="assets/main.css">
   </head>
   <body>
     <nav id="navigation">
       <div id="navContent" class="content">
         <a class="logo" href="#header">
-          <img alt="WhoMine Logo" src="./assets/img/logo_rounded.webp" draggable="false">
+          <img alt="WhoMine Logo" src="assets/img/logo_rounded.webp" draggable="false">
         </a>
         <div id="hamburger" class="hamburger">
-          <img src="./assets/img/hamburger.svg" alt="Hamburger">
+          <img src="assets/img/hamburger.svg" alt="Hamburger">
         </div>
         <ul id="navItems">
           <li>
             <a class="logo" href="#header">
-              <img alt="WhoMine Logo" src="./assets/img/logo_rounded.webp" draggable="false">
+              <img alt="WhoMine Logo" src="assets/img/logo_rounded.webp" draggable="false">
             </a>
           </li>
           <li class="m">
-            <button onclick="location.href='#faq'" title="О Сервере" type="button">
-              О Сервере
-            </button>
+            <button onclick="location.href='#faq'" title="О Сервере" type="button">О Сервере</button>
           </li>
           <li class="m">
-            <button onclick="location.href='https://docs.whomine.net'" title="Документация" type="button">
-              Документация
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-left: 0.5rem; margin-bottom: 0.05rem;">
-                <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5H8.2c-1.1 0-1.7 0-2.1.2a2 2 0 0 0-.9.9C5 6.5 5 7 5 8.2v7.6c0 1.1 0 1.7.2 2.1.2.4.5.7.9.9.4.2 1 .2 2.1.2h7.6c1.1 0 1.7 0 2.1-.2.4-.2.7-.5.9-.9.2-.4.2-1 .2-2.1V14m1-5V4m0 0h-5m5 0-7 7"/>
-              </svg>
-            </button>
+            <button onclick="location.href='https://docs.whomine.net'" title="Документация" type="button">Документация<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-left: 0.5rem; margin-bottom: 0.05rem;"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5H8.2c-1.1 0-1.7 0-2.1.2a2 2 0 0 0-.9.9C5 6.5 5 7 5 8.2v7.6c0 1.1 0 1.7.2 2.1.2.4.5.7.9.9.4.2 1 .2 2.1.2h7.6c1.1 0 1.7 0 2.1-.2.4-.2.7-.5.9-.9.2-.4.2-1 .2-2.1V14m1-5V4m0 0h-5m5 0-7 7"/></svg></button>
           </li>
           <li class="m">
-            <button onclick="location.href='./discord'" title="Discord" type="button">
-              Discord
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-left: 0.5rem; margin-bottom: 0.05rem;">
-                <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5H8.2c-1.1 0-1.7 0-2.1.2a2 2 0 0 0-.9.9C5 6.5 5 7 5 8.2v7.6c0 1.1 0 1.7.2 2.1.2.4.5.7.9.9.4.2 1 .2 2.1.2h7.6c1.1 0 1.7 0 2.1-.2.4-.2.7-.5.9-.9.2-.4.2-1 .2-2.1V14m1-5V4m0 0h-5m5 0-7 7"/>
-              </svg>
-            </button>
+            <button onclick="location.href='discord'" title="Discord" type="button">Discord<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-left: 0.5rem; margin-bottom: 0.05rem;"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5H8.2c-1.1 0-1.7 0-2.1.2a2 2 0 0 0-.9.9C5 6.5 5 7 5 8.2v7.6c0 1.1 0 1.7.2 2.1.2.4.5.7.9.9.4.2 1 .2 2.1.2h7.6c1.1 0 1.7 0 2.1-.2.4-.2.7-.5.9-.9.2-.4.2-1 .2-2.1V14m1-5V4m0 0h-5m5 0-7 7"/></svg></button>
           </li>
           <li class="m">
             <button class="ip-button" title="Скопировать" type="button">
-              <img alt="Copy Button" src="./assets/img/copy_button.svg" draggable="false" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;">
+              <img alt="Copy Button" src="assets/img/copy_button.svg" draggable="false" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;">
               <span>play.whomine.net</span>
             </button>
           </li>
         </ul>
         <button class="ip-button" title="Скопировать" type="button">
-          <img alt="Copy Button" src="./assets/img/copy_button.svg" draggable="false" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;">
+          <img alt="Copy Button" src="assets/img/copy_button.svg" draggable="false" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;">
           <span>play.whomine.net</span>
         </button>
       </div>
@@ -69,7 +58,7 @@
     <header id="header">
       <div class="page-bg">
         <div class="logo">
-          <img src="./assets/img/whomine290x290.webp" alt="whomine logo" draggable="false">
+          <img src="assets/img/whomine290x290.webp" alt="whomine logo" draggable="false">
         </div>
       </div>
       <div class="scroll-down">
@@ -79,16 +68,12 @@
     <main id="main">
       <div class="content">
         <article id="info" class="card-info info reverse">
-          <img alt="T.A.R.D.I.S. Image" src="./assets/img/tardis.webp" draggable="false">
+          <img alt="T.A.R.D.I.S. Image" src="assets/img/tardis.webp" draggable="false">
           <div class="text">
             <h1>Кто мы?</h1>
-            <p>
-              WhoMine - это приватный RP-Survival сервер, где
-              ты можешь стать кем угодно и воплотить свои
-              фантазии в захватывающем игровом мире
-            </p>
+            <p>WhoMine - это приватный RP-Survival сервер, где ты можешь стать кем угодно и воплотить свои фантазии в захватывающем игровом мире</p>
             <button class="ip-button" title="Скопировать" type="button">
-              <img alt="Copy Button" src="./assets/img/copy_button.svg" draggable="false" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;">
+              <img alt="Copy Button" src="assets/img/copy_button.svg" draggable="false" style="width: 1.5rem; margin-right: 1rem; margin-left: -1rem;">
               <span>play.whomine.net</span>
             </button>
           </div>
@@ -100,73 +85,44 @@
                 <div class="about" style="color: #EA323CFF">
                   <div class="name">Poloskun</div>
                   <div class="job-title">
-                    <span style="color: white">
-                      Основатель
-                    </span>
+                    <span style="color: white">Основатель</span>
                   </div>
                 </div>
-                <p class="text">
-                  Привет, мой друг!
-                  Я отвечаю за техническую часть данного сервера и всегда готов помочь с любыми вопросами.
-                  Не стесняйся обращаться ко мне по любым вопросам,
-                  связанным с ошибками или идеями.
-                  Кроме того, я активно провожу время на сервере,
-                  где рад встрече с новыми игроками.
-                  Буду рад помочь и сделать наш сервер ещё лучше вместе с тобой!
-                </p>
+                <p class="text">Привет, мой друг! Я отвечаю за техническую часть данного сервера и всегда готов помочь с любыми вопросами. Не стесняйся обращаться ко мне по любым вопросам, связанным с ошибками или идеями. Кроме того, я активно провожу время на сервере, где рад встрече с новыми игроками. Буду рад помочь и сделать наш сервер ещё лучше вместе с тобой!</p>
               </div>
               <div id="personal-info-demmicat">
                 <div class="about" style="color: rgb(234, 50, 60);">
                   <div class="name">Demmicat</div>
                   <div class="job-title">
-                    <span style="color: white">
-                      Основатель
-                    </span>
+                    <span style="color: white">Основатель</span>
                   </div>
                 </div>
-                <p class="text">
-                  На сегодняшний день я являюсь своеобразным «вышестоящим судом»,
-                  который поможет вам в случае неразберихи.
-                  Я также помогаю серверу идейно и в качестве организатора ивентов.
-                  Стараюсь принимать участие в продвижении проекта,
-                  но теперь уже не как главное ответственное лицо,
-                  а как помощник для администрации.
-                </p>
+                <p class="text">На сегодняшний день я являюсь своеобразным «вышестоящим судом», который поможет вам в случае неразберихи. Я также помогаю серверу идейно и в качестве организатора ивентов. Стараюсь принимать участие в продвижении проекта, но теперь уже не как главное ответственное лицо, а как помощник для администрации.</p>
               </div>
               <div id="personal-info-sparrow">
                 <div class="about" style="color: rgb(249, 114, 22);">
                   <div class="name">Sparrow</div>
                   <div class="job-title">
-                    <span style="color: white">
-                      Администратор
-                    </span>
+                    <span style="color: white">Администратор</span>
                   </div>
                 </div>
-                <p class="text">
-                  Привет! Я работаю с аудиторией сервера,
-                  принимаю их идеи о постройках,
-                  проектах и других аспектах развития.
-                  Готов помочь в развитии сервера, советами и поддержкой.
-                  Не забывай, что я также смогу помочь с различными видами неприятностей.
-                  Буду рад тебя видеть на нашем сервере,
-                  где ты сможешь насладиться увлекательным игровым опытом и встретить новых друзей!
-                </p>
+                <p class="text">Привет! Я работаю с аудиторией сервера, принимаю их идеи о постройках, проектах и других аспектах развития. Готов помочь в развитии сервера, советами и поддержкой. Не забывай, что я также смогу помочь с различными видами неприятностей. Буду рад тебя видеть на нашем сервере, где ты сможешь насладиться увлекательным игровым опытом и встретить новых друзей!</p>
               </div>
             </div>
             <div class="head-list">
               <a id="team-arrow-left" class="arrow" style="transform: rotate(90deg);"></a>
               <div class="heads">
-                <img id="poloskun" class="head" src="./assets/img/team/poloskun_head.webp" alt="poloskun_" draggable="false">
-                <img id="demmicat" class="head" src="./assets/img/team/demmicat_head.webp" alt="demmicat" draggable="false">
-                <img id="sparrow" class="head" src="./assets/img/team/sparrow_head.webp" alt="sparrow" draggable="false">
+                <img id="poloskun" class="head" src="assets/img/team/poloskun_head.webp" alt="poloskun_" draggable="false">
+                <img id="demmicat" class="head" src="assets/img/team/demmicat_head.webp" alt="demmicat" draggable="false">
+                <img id="sparrow" class="head" src="assets/img/team/sparrow_head.webp" alt="sparrow" draggable="false">
               </div>
               <a id="team-arrow-right" class="arrow" style="transform: rotate(-90deg);"></a>
             </div>
           </div>
           <div class="skin">
-            <div id="body-poloskun" style="background-image: url(./assets/img/team/poloskun_body.webp);"></div>
-            <div id="body-demmicat" style="background-image: url(./assets/img/team/demmicat_body.webp);"></div>
-            <div id="body-sparrow" style="background-image: url(./assets/img/team/sparrow_body.webp);"></div>
+            <div id="body-poloskun" style="background-image: url(assets/img/team/poloskun_body.webp);"></div>
+            <div id="body-demmicat" style="background-image: url(assets/img/team/demmicat_body.webp);"></div>
+            <div id="body-sparrow" style="background-image: url(assets/img/team/sparrow_body.webp);"></div>
           </div>
         </article>
         <article id="faq" class="faq">
@@ -174,59 +130,37 @@
             <div class="item">
               <button type="button">
                 <p>На какой версии сервер?</p>
-                <img alt="Arrow" src="./assets/img/down-arrow.svg" draggable="false">
+                <img alt="Arrow" src="assets/img/down-arrow.svg" draggable="false">
               </button>
-              <p class="text" style="display: none"><br>
-                На данный момент сервер работает на версии 1.19.4
-              </p>
+              <p class="text" style="display: none"><br>На данный момент сервер работает на версии 1.19.4</p>
             </div>
             <div class="item">
               <button type="button">
                 <p>Нужна ли лицензия для входа?</p>
-                <img alt="Arrow" src="./assets/img/down-arrow.svg" draggable="false">
+                <img alt="Arrow" src="assets/img/down-arrow.svg" draggable="false">
               </button>
-              <p class="text" style="display: none"><br>
-                Нет, лицензия не нужна, на сервере представлена
-                система авторизации, которая позволяет вам
-                защитить свой аккаунт
-              </p>
+              <p class="text" style="display: none"><br>Нет, лицензия не нужна, на сервере представлена система авторизации, которая позволяет вам защитить свой аккаунт</p>
             </div>
             <div class="item">
               <button type="button">
                 <p>Как попасть на сервер?</p>
-                <img alt="Arrow" src="./assets/img/down-arrow.svg" draggable="false">
+                <img alt="Arrow" src="assets/img/down-arrow.svg" draggable="false">
               </button>
-              <p class="text" style="display: none"><br>
-                Для того чтобы попасть на сервер, вам сперва
-                необходимо зайти на наш дискорд сервер и
-                написать администрации, после чего вам зададут
-                несколько вопросов и вы сможете зайти на сервер
-              </p>
+              <p class="text" style="display: none"><br>Для того чтобы попасть на сервер, вам сперва необходимо зайти на наш дискорд сервер и написать администрации, после чего вам зададут несколько вопросов и вы сможете зайти на сервер</p>
             </div>
             <div class="item">
               <button type="button">
                 <p>Какие моды используются на сервере?</p>
-                <img alt="Arrow" src="./assets/img/down-arrow.svg" draggable="false">
+                <img alt="Arrow" src="assets/img/down-arrow.svg" draggable="false">
               </button>
-              <p class="text" style="display: none"><br>
-                Вы можете установить PlasmoVoice, чтобы
-                использовать голосовой чат на сервере,
-                а также EmoteCraft для использования
-                эмоций в игре
-              </p>
+              <p class="text" style="display: none"><br>Вы можете установить PlasmoVoice, чтобы использовать голосовой чат на сервере, а также EmoteCraft для использования эмоций в игре</p>
             </div>
             <div class="item">
               <button type="button">
                 <p>Чем сервер уникален?</p>
-                <img alt="Arrow" src="./assets/img/down-arrow.svg" draggable="false">
+                <img alt="Arrow" src="assets/img/down-arrow.svg" draggable="false">
               </button>
-              <p class="text" style="display: none"><br>
-                На сервере представлены уникальные
-                механики, а также множество кастомных
-                предметов, декораций, а также блоков.
-                Подробнее об этих и других механиках
-                вы можете узнать в нашей документации
-              </p>
+              <p class="text" style="display: none"><br>На сервере представлены уникальные механики, а также множество кастомных предметов, декораций, а также блоков. Подробнее об этих и других механиках вы можете узнать в нашей документации</p>
             </div>
           </div>
           <a class="help" href="https://docs.whomine.net">
@@ -238,35 +172,21 @@
                 <path fill="currentColor" fill-rule="evenodd" d="m562.168 159.724 325.95 162.727c15.062 7.519 15.298 28.898.404 36.746L465.19 582.283a82.875 82.875 0 0 1-75.639.83L123.74 450.409c-32.376-12.972-68.568 10.748-68.568 46.474 0 28.728 16.256 54.991 41.99 67.839l266.48 133.036c16.267-16.537 38.918-26.795 63.967-26.795 24.334 0 46.404 9.68 62.558 25.394L822.075 521.45a89.893 89.893 0 0 1-1.385-15.755c0-49.44 40.14-89.519 89.655-89.519S1000 456.255 1000 505.695c0 49.439-40.14 89.518-89.655 89.518-24.21 0-46.178-9.581-62.31-25.153L515.94 745.065a90.036 90.036 0 0 1 1.324 15.417c0 49.439-40.14 89.518-89.655 89.518s-89.655-40.079-89.655-89.518c0-4.572.343-9.063 1.006-13.451L68.622 612.068C26.566 591.072 0 548.153 0 501.205v-26.15c0-35.755 19.82-68.574 51.49-85.261l435.039-229.24a82.87 82.87 0 0 1 75.639-.83ZM427.609 794.912c19.044 0 34.483-15.415 34.483-34.43 0-19.016-15.439-34.431-34.483-34.431-19.044 0-34.482 15.415-34.482 34.431 0 19.015 15.438 34.43 34.482 34.43Zm517.219-289.217c0 19.015-15.438 34.43-34.483 34.43-19.044 0-34.482-15.415-34.482-34.43s15.438-34.43 34.482-34.43c19.045 0 34.483 15.415 34.483 34.43Z" />
               </svg>
             </div>
-            <p class="title">
-              Остались вопросы?
-            </p>
-            <p class="description">
-              Узнай больше в нашей документации,
-              где хранится вся полезная информация
-              о сервере и его механиках
-            </p>
+            <p class="title">Остались вопросы?</p>
+            <p class="description">Узнай больше в нашей документации, где хранится вся полезная информация о сервере и его механиках</p>
           </a>
         </article>
         <article id="discord" class="card-info discord">
-          <img src="./assets/img/discord_pig.webp" alt="discord pig" draggable="false">
+          <img src="assets/img/discord_pig.webp" alt="discord pig" draggable="false">
           <div class="text">
             <h1>Наш Дискорд</h1>
-            <p>
-              Мы думаем, что общение - это самое главное,
-              по этому мы решили, что было бы круто сделать
-              свой сервер в <b>Discord</b>, где все люди могут
-              общаться друг с другом. Заходите к нам, дабы
-              окунутся в мир <b>#WhoMine</b>!
-            </p>
-            <button onclick="location.href='./discord'" title="Перейти в дискорд" type="button">
-              Перейти в дискорд
-            </button>
+            <p>Мы думаем, что общение - это самое главное, по этому мы решили, что было бы круто сделать свой сервер в <b>Discord</b> где все люди могут общаться друг с другом. Заходите к нам, дабы окунутся в мир <b>#WhoMine</b>!</p>
+            <button onclick="location.href='discord'" title="Перейти в дискорд" type="button">Перейти в дискорд</button>
           </div>
         </article>
         <article id="screen-gallery" class="screen-gallery">
           <div class="image-panel">
-            <img id="screenshot-img" class="screenshot-img" alt="Screenshot" src="./assets/img/screenshots/16.webp">
+            <img id="screenshot-img" class="screenshot-img" alt="Screenshot" src="assets/img/screenshots/16.webp">
             <button id="random-button" class="button" type="button">
               <p>Случайный скриншот</p>
             </button>
@@ -278,32 +198,29 @@
     <footer id="footer">
       <div class="content">
         <div class="author">
-          <a class="logo" href="https://minersstudios.com/">
+          <a class="logo" href="https://minersstudios.com">
             <img alt="MinersStudios Logo" src="https://raw.githubusercontent.com/MinersStudios/.github/main/assets/logos/logo_white.svg" draggable="false">
           </a>
-          <p>
-            WhoMine by
-            <a class="transition-colors" href="https://minersstudios.com/">MinersStudios</a>
-          </p>
+          <p>WhoMine by <a class="transition-colors" href="https://minersstudios.com">MinersStudios</a></p>
         </div>
         <hr>
         <ul class="links">
           <li>
-            <a class="transition-colors" href="./telegram" title="Telegram канал">
+            <a class="transition-colors" href="telegram" title="Telegram канал">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                 <path d="m2.5 10.5 18-6.8A1.2 1.2 0 0 1 22 5.1l-3.1 14a1.3 1.3 0 0 1-2 .8l-6.2-4.4a.8.8 0 0 1-.1-1.3l6.3-6v-.5a.3.3 0 0 0-.4 0L7.9 13a2 2 0 0 1-1.7.2L2.6 12a.8.8 0 0 1 0-1.5Z" />
               </svg>
             </a>
           </li>
           <li>
-            <a class="transition-colors" href="./discord" title="Discord сервер">
+            <a class="transition-colors" href="discord" title="Discord сервер">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.2.38-.44.87-.6 1.25a18.27 18.27 0 0 0-5.5 0c-.16-.4-.4-.87-.6-1.25a.08.08 0 0 0-.09-.04 19.74 19.74 0 0 0-4.88 1.52.07.07 0 0 0-.04.03A20.26 20.26 0 0 0 .1 18.06a.08.08 0 0 0 .03.05 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.02c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.1 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1 0-.12l.36-.3a.07.07 0 0 1 .08 0 14.2 14.2 0 0 0 12.06 0 .07.07 0 0 1 .08 0l.37.3a.08.08 0 0 1 0 .12 12.3 12.3 0 0 1-1.88.9.08.08 0 0 0-.04.1c.36.7.78 1.36 1.23 2a.08.08 0 0 0 .08.02 19.6 19.6 0 0 0 6-3.03.08.08 0 0 0 .04-.05c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.22 0 2.18 1.1 2.16 2.42 0 1.34-.94 2.42-2.16 2.42Z" />
               </svg>
             </a>
           </li>
           <li>
-            <a class="transition-colors" href="./github" title="GitHub">
+            <a class="transition-colors" href="github" title="GitHub">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.4 1 .2-.8.5-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.1-.4-.6-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.2 2.9.1 3.2.8.8 1.3 1.9 1.3 3.2 0 4.6-2.9 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 0z" />
               </svg>
@@ -311,11 +228,7 @@
           </li>
         </ul>
       </div>
-      <p class="disclaimer">
-        Not an official Minecraft product<br>
-        We are in no way affiliated with or endorsed by <b>Mojang Synergies AB</b>, <b>Microsoft Corporation</b> or other rights-holders
-      </p>
+      <p class="disclaimer">Not an official Minecraft product<br>We are in no way affiliated with or endorsed by <b>Mojang Synergies AB</b>, <b>Microsoft Corporation</b> or other rights-holders</p>
     </footer>
-    <script type="module" src="assets/main.js" crossorigin="anonymous" async></script>
   </body>
 </html>
