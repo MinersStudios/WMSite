@@ -153,6 +153,11 @@ a:hover {
   fill: #93a6ad !important;
 }
 
+strong,
+b {
+  font-weight: bold;
+}
+
 article {
   opacity: 0;
   transform: translateY(25px) scale(.9);
@@ -267,6 +272,9 @@ button a:hover {
   width: 1.5rem !important;
   margin-right: 1rem;
   margin-left: -1rem;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* Header */
@@ -528,7 +536,6 @@ main .content {
 
 .card-info .text {
   font-size: 17px;
-  font-weight: 400;
   line-height: 1.71;
   letter-spacing: 1px;
   color: #a6a6a6;
@@ -718,7 +725,6 @@ main .content {
 
 .team .info .personal-info .text {
   font-size: 1.125rem;
-  font-weight: 400;
   word-wrap: break-word;
   line-height: 1.75rem;
   padding-bottom: 2rem;
