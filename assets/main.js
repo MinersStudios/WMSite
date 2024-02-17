@@ -234,7 +234,9 @@ function handleAnchorClick(event) {
 
 async function handleIPButtonClick() {
   try {
-    if (typeof navigator.clipboard === 'undefined') {
+    if ("clipboard" in navigator) {
+      await navigator.clipboard.writeText(ip)
+    } else {
       const textarea = document.createElement('textarea')
       textarea.value = ip
 
@@ -242,8 +244,6 @@ async function handleIPButtonClick() {
       textarea.select()
       document.execCommand('copy')
       document.body.removeChild(textarea)
-    } else {
-      await navigator.clipboard.writeText(ip)
     }
 
     showToast('Айпи скопирован!', ToastType.SUCCESS)
