@@ -987,6 +987,7 @@ main .content {
   bottom: 0;
   right: 0;
   width: 32%;
+  height: 3.25rem;
   margin: 1rem;
   padding: .35rem;
   cursor: pointer;
